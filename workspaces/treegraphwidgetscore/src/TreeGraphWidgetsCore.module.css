@@ -1,0 +1,11 @@
+.organogram {
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+    touch-action: none;
+}
+
+.tree {
+    overflow-x: hidden;
+    overflow-y: scroll;
+}

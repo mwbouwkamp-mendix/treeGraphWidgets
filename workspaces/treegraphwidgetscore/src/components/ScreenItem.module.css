@@ -1,0 +1,5 @@
+.element {
+    display: flex;
+    align-content: stretch;
+    position: absolute;
+}
