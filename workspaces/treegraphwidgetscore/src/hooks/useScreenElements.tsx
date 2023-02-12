@@ -2,7 +2,6 @@ import { CSSProperties, useEffect, useState } from "react";
 import { Item } from "../models/Item";
 import { Bezier } from "../models/Bezier";
 import { createScreenElements } from "../utils/ScreenElementUtils";
-import { Dimensions } from "../models/Dimensions";
 import Big from "big.js";
 import { WidgetTypeEnum, LineTypeEnum } from "@treegraphwidgets/treegraphwidgetscore/typings/TreeGraphWidgetsCoreProps";
 import { ListValue, ListAttributeValue, ListWidgetValue } from "mendix";
@@ -37,13 +36,11 @@ const useScreenElements = (props:
     }): {
     items: Item[];
     beziers: Bezier[];
-    dimensions: Dimensions;
     focusedItemProps: { x: number; y: number; isRoot: boolean };
 } => {
     const [screenElements, setScreenElements] = useState<{
         items: Item[];
         beziers: Bezier[];
-        dimensions: Dimensions;
         focusedItemProps: { x: number; y: number; isRoot: boolean };
     }>(createScreenElements(props));
 
@@ -52,11 +49,10 @@ const useScreenElements = (props:
             props.dataMicroflow.items!.length > 0 &&
             (props.widgetType !== "pert" || (props.dataMicroflowEdge && props.dataMicroflowEdge.items!.length > 0))
         ) {
-            const { items, beziers, dimensions, focusedItemProps } = createScreenElements(props);
+            const { items, beziers, focusedItemProps } = createScreenElements(props);
             setScreenElements(_prevSceenElements => ({
                 items,
                 beziers,
-                dimensions,
                 focusedItemProps
             }));
         }
@@ -65,7 +61,6 @@ const useScreenElements = (props:
     return {
         items: screenElements.items,
         beziers: screenElements.beziers,
-        dimensions: screenElements.dimensions,
         focusedItemProps: screenElements.focusedItemProps
     };
 };

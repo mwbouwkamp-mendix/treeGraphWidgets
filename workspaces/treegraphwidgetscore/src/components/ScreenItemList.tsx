@@ -1,15 +1,15 @@
 import { createElement, Fragment, ReactElement } from "react";
-import { Dimensions } from "../models/Dimensions";
 import { Item } from "../models/Item";
 import ScreenItem from "./ScreenItem";
 
 export interface ScreenItemListProps {
     items: Item[];
-    dimensions: Dimensions;
+    elementWidth: number;
+    elementHeight: number;
 }
 
 const ScreenItemList = (props: ScreenItemListProps): ReactElement => {
-    const createScreenItems = (items: Item[], dimensions: Dimensions): ReactElement[] => {
+    const createScreenItems = (items: Item[], elementWidth: number, elementHeight: number): ReactElement[] => {
         if (!items) {
             return [];
         }
@@ -20,14 +20,14 @@ const ScreenItemList = (props: ScreenItemListProps): ReactElement => {
                     key={item.id}
                     left={item.x}
                     top={item.y}
-                    width={dimensions.elementWidth}
-                    height={dimensions.elementHeight}
+                    width={elementWidth}
+                    height={elementHeight}
                     item={item.widgetContent}
                 />
             ));
     };
 
-    return <Fragment>{createScreenItems(props.items, props.dimensions)}</Fragment>;
+    return <Fragment>{createScreenItems(props.items, props.elementWidth, props.elementHeight)}</Fragment>;
 };
 
 export default ScreenItemList;

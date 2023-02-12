@@ -19,7 +19,7 @@ export function OrgChart(props: OrgChartContainerProps): ReactElement {
 
     const width = useRef(0);
 
-    const { items, beziers, dimensions, focusedItemProps } = useScreenElements(
+    const { items, beziers, focusedItemProps } = useScreenElements(
         {
             name: props.name,
             class: props.class,
@@ -70,10 +70,10 @@ export function OrgChart(props: OrgChartContainerProps): ReactElement {
                     elementHeight={props.elementHeight}
                     focusedItemProps={focusedItemProps}
                     items={items}
-                    dimensions={dimensions}
                     lineStyle={props.lineStyle}
                     beziers={beziers}
                     lineType={props.lineType}
+                    arrowWidth={props.arrowWidth}
                 />
             )}
         </div>

@@ -1,6 +1,5 @@
 import React, { createElement, Fragment, ReactElement } from "react";
 import { Bezier } from "@treegraphwidgets/treegraphwidgetscore/src/models/Bezier";
-import { Dimensions } from "@treegraphwidgets/treegraphwidgetscore/src/models/Dimensions";
 import { Item } from "@treegraphwidgets/treegraphwidgetscore/src/models/Item";
 import ScreenBezierList from "@treegraphwidgets/treegraphwidgetscore/src/components/ScreenBezierList";
 import ScreenItemList from "@treegraphwidgets/treegraphwidgetscore/src/components/ScreenItemList";
@@ -8,19 +7,20 @@ import ScreenItemList from "@treegraphwidgets/treegraphwidgetscore/src/component
 export interface OrganogramChartProps {
     items: Item[];
     beziers: Bezier[];
-    dimensions: Dimensions;
+    arrowWidth: number;
     lineStyle: string;
     width: number;
     height: number;
+    elementHeight: number;
+    elementWidth: number;
     lineType: string;
 }
 
 const propsAreEqual = (prevProps: OrganogramChartProps, newProps: OrganogramChartProps): boolean => {
     return (
         prevProps.items === newProps.items &&
-        prevProps.dimensions.elementWidth === newProps.dimensions.elementWidth &&
-        prevProps.dimensions.elementHeight === newProps.dimensions.elementHeight &&
-        prevProps.dimensions.verticalSpacing === newProps.dimensions.verticalSpacing &&
+        prevProps.elementWidth === newProps.elementWidth &&
+        prevProps.elementHeight === newProps.elementHeight &&
         prevProps.lineStyle === newProps.lineStyle &&
         prevProps.width === newProps.width &&
         prevProps.height === newProps.height &&
@@ -36,10 +36,10 @@ const OrganogramChart = (props: OrganogramChartProps): ReactElement => {
                 lineStyle={props.lineStyle}
                 width={props.width}
                 height={props.height}
-                dimensions={props.dimensions}
+                arrowWidth={props.arrowWidth}
                 lineType={props.lineType}
             />
-            <ScreenItemList items={props.items} dimensions={props.dimensions} />
+            <ScreenItemList items={props.items} elementWidth={props.elementWidth} elementHeight={props.elementHeight} />
         </Fragment>
     );
 };

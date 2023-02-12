@@ -1,7 +1,6 @@
 import { generateItems, getFocussedItem, getRootItem } from "./ItemUtils";
 import { generateBeziers } from "./BezierUtils";
 import { TreeGraphWidgetsCoreContainerProps } from "../../typings/TreeGraphWidgetsCoreProps";
-import { Dimensions } from "../models/Dimensions";
 import { Bezier } from "../models/Bezier";
 import { Item } from "../models/Item";
 
@@ -12,7 +11,6 @@ export const createScreenElements = (
 ): {
     items: Item[];
     beziers: Bezier[];
-    dimensions: Dimensions;
     focusedItemProps: { x: number; y: number; isRoot: boolean };
 } => {
     const dimensions = {
@@ -54,5 +52,5 @@ export const createScreenElements = (
         : rootItem
         ? { x: rootItem.x, y: rootItem.y, isRoot: rootItem.isRoot }
         : { x: 0, y: 0, isRoot: false };
-    return { items, beziers, dimensions, focusedItemProps };
+    return { items, beziers, focusedItemProps };
 };

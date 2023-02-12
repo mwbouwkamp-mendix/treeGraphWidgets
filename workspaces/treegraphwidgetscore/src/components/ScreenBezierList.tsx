@@ -1,14 +1,13 @@
 import { createElement, ReactElement } from "react";
 import { Bezier } from "../models/Bezier";
 import { Coordinate } from "../models/Coordinate";
-import { Dimensions } from "../models/Dimensions";
 import ScreenBezier from "./ScreenBezier";
 
 export interface ScreenBezierListProps {
     beziers: Bezier[];
     width: number;
     height: number;
-    dimensions: Dimensions;
+    arrowWidth: number;
     lineType: string;
     lineStyle: string;
 }
@@ -51,7 +50,7 @@ const calculateSVGDimensions = (beziers: Bezier[], arrowWidth: number): Coordina
 
 const ScreenBezierList = (props: ScreenBezierListProps): ReactElement => {
     const { lineStroke, lineWidth, lineColor } = getLineProperties(props.lineStyle);
-    const svgDimensions = calculateSVGDimensions(props.beziers, props.dimensions.arrowWidth);
+    const svgDimensions = calculateSVGDimensions(props.beziers, props.arrowWidth);
 
     const createBezierElements = props.beziers.map(bezier => (
         <ScreenBezier
@@ -70,15 +69,15 @@ const ScreenBezierList = (props: ScreenBezierListProps): ReactElement => {
                 <defs>
                     <marker
                         id="arrowhead"
-                        markerWidth={props.dimensions.arrowWidth}
-                        markerHeight={(props.dimensions.arrowWidth * 2) / 3}
-                        refX={props.lineType === "bezier" ? 0 : props.dimensions.arrowWidth}
-                        refY={props.dimensions.arrowWidth / 3}
+                        markerWidth={props.arrowWidth}
+                        markerHeight={(props.arrowWidth * 2) / 3}
+                        refX={props.lineType === "bezier" ? 0 : props.arrowWidth}
+                        refY={props.arrowWidth / 3}
                         orient="auto"
                     >
                         <polygon
-                            points={`0 0, ${props.dimensions.arrowWidth} ${props.dimensions.arrowWidth / 3}, 0 ${
-                                (props.dimensions.arrowWidth * 2) / 3
+                            points={`0 0, ${props.arrowWidth} ${props.arrowWidth / 3}, 0 ${
+                                (props.arrowWidth * 2) / 3
                             }`}
                             fill={lineColor}
                             strokeWidth={1}

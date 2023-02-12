@@ -1,6 +1,5 @@
 import { createElement, ReactElement } from "react";
 import { Bezier } from "@treegraphwidgets/treegraphwidgetscore/src/models/Bezier";
-import { Dimensions } from "@treegraphwidgets/treegraphwidgetscore/src/models/Dimensions";
 import { Item } from "@treegraphwidgets/treegraphwidgetscore/src/models/Item";
 import OrganogramChart from "./OrganogramChart";
 import PanZoomScrollArea from "@treegraphwidgets/treegraphwidgetscore/src/components/PanZoomScrollArea";
@@ -10,10 +9,10 @@ export interface OrganogramProps {
     height: number;
     elementWidth: number;
     elementHeight: number;
+    arrowWidth: number;
     focusedItemProps: { x: number; y: number; isRoot: boolean };
     items: Item[];
     beziers: Bezier[];
-    dimensions: Dimensions;
     lineStyle: string;
     lineType: string;
 }
@@ -34,12 +33,14 @@ const Organogram = (props: OrganogramProps): ReactElement => {
         >
             <OrganogramChart
                 items={props.items}
-                dimensions={props.dimensions}
                 lineStyle={props.lineStyle}
                 beziers={props.beziers}
                 width={props.width}
                 height={props.height}
-                lineType={props.lineType}
+                lineType={props.lineType} 
+                arrowWidth={props.arrowWidth} 
+                elementHeight={props.elementHeight} 
+                elementWidth={props.elementWidth}
             />
         </PanZoomScrollArea>
     );

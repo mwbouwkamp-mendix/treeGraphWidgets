@@ -21,7 +21,7 @@ export function PertChart(props: PertChartContainerProps): ReactElement {
 
     const width = useRef(0);
 
-    const { items, beziers, dimensions, focusedItemProps } = useScreenElements(
+    const { items, beziers, focusedItemProps } = useScreenElements(
         {
             name: props.name,
             class: props.class,
@@ -72,9 +72,9 @@ export function PertChart(props: PertChartContainerProps): ReactElement {
                     focusedItemProps={focusedItemProps}
                     items={items}
                     beziers={beziers}
-                    dimensions={dimensions}
                     lineType={props.lineType}
                     lineStyle={props.lineStyle}
+                    arrowWidth={props.arrowWidth}
                 />
             )}
         </div>
