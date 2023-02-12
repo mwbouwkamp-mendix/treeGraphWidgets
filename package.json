@@ -9,5 +9,8 @@
   "dependencies": {
     "rollup-plugin-typescript2": "^0.34.1",
     "typescript": "^4.9.5"
+  },
+  "scripts": {
+    "build": "cd ./workspaces/orgChart/ && npm run build && cd ../pertChart/ && npm run build && cd ../treeList/ && npm run build && cd .. & cd .."
   }
 }
