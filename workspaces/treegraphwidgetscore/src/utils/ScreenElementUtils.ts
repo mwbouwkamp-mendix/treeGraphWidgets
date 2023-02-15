@@ -1,14 +1,36 @@
 import { generateItems, getFocussedItem, getRootItem } from "./ItemUtils";
 import { generateBeziers } from "./BezierUtils";
-import { TreeGraphWidgetsCoreContainerProps } from "../../typings/TreeGraphWidgetsCoreProps";
 import { Bezier } from "../models/Bezier";
 import { Item } from "../models/Item";
+import { ListValue, ListAttributeValue, ListWidgetValue } from "mendix";
+import { WidgetTypeEnum, LineTypeEnum } from "@treegraphwidgets/treegraphwidgetscore/typings/TreeGraphWidgetsCoreProps";
+import Big from "big.js";
 
 const HORIZONTAL_SPACING_FACTOR = 3;
 
 export const createScreenElements = (
-    props: TreeGraphWidgetsCoreContainerProps
-): {
+    props:
+        {
+            widgetType: WidgetTypeEnum;
+            dataMicroflow: ListValue;
+            self: ListAttributeValue<string>;
+            parent?: ListAttributeValue<string>;
+            hasFocus: ListAttributeValue<boolean>;
+            hasChildren?: ListAttributeValue<boolean>;
+            showsChildren?: ListAttributeValue<boolean>;
+            elementWidth: number;
+            elementHeight: number;
+            hSpacing: number;
+            vSpacing: number;
+            bezierDelta: number;
+            arrowWidth: number;
+            lineType: LineTypeEnum;
+            boxContent: ListWidgetValue;
+            dataMicroflowEdge?: ListValue;
+            parentEdge?: ListAttributeValue<string>;
+            childEdge?: ListAttributeValue<string>;
+            column?: ListAttributeValue<Big>;
+        }): {
     items: Item[];
     beziers: Bezier[];
     focusedItemProps: { x: number; y: number; isRoot: boolean };
@@ -50,7 +72,8 @@ export const createScreenElements = (
     const focusedItemProps = focusedItem
         ? { x: focusedItem.x, y: focusedItem.y, isRoot: focusedItem.isRoot }
         : rootItem
-        ? { x: rootItem.x, y: rootItem.y, isRoot: rootItem.isRoot }
-        : { x: 0, y: 0, isRoot: false };
+            ? { x: rootItem.x, y: rootItem.y, isRoot: rootItem.isRoot }
+            : { x: 0, y: 0, isRoot: false };
+
     return { items, beziers, focusedItemProps };
 };

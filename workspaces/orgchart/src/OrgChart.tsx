@@ -21,12 +21,7 @@ export function OrgChart(props: OrgChartContainerProps): ReactElement {
 
     const { items, beziers, focusedItemProps } = useScreenElements(
         {
-            name: props.name,
-            class: props.class,
-            style: props.style,
-            tabIndex: props.tabIndex,
             widgetType: props.widgetType,
-            height: props.height,
             dataMicroflow: props.dataMicroflow,
             self: props.self,
             parent: props.parent,
@@ -40,7 +35,6 @@ export function OrgChart(props: OrgChartContainerProps): ReactElement {
             bezierDelta: props.bezierDelta,
             arrowWidth: props.arrowWidth,
             lineType: props.lineType,
-            lineStyle: props.lineStyle,
             boxContent: props.boxContent,
             dataMicroflowEdge: props.dataMicroflowEdge,
             parentEdge: props.parentEdge,

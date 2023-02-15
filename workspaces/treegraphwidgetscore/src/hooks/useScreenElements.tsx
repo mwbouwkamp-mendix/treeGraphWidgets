@@ -1,4 +1,4 @@
-import { CSSProperties, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Item } from "../models/Item";
 import { Bezier } from "../models/Bezier";
 import { createScreenElements } from "../utils/ScreenElementUtils";
@@ -8,12 +8,7 @@ import { ListValue, ListAttributeValue, ListWidgetValue } from "mendix";
 
 const useScreenElements = (props:
     {
-        name: string;
-        class: string;
-        style?: CSSProperties;
-        tabIndex?: number;
         widgetType: WidgetTypeEnum;
-        height: number;
         dataMicroflow: ListValue;
         self: ListAttributeValue<string>;
         parent?: ListAttributeValue<string>;
@@ -27,13 +22,12 @@ const useScreenElements = (props:
         bezierDelta: number;
         arrowWidth: number;
         lineType: LineTypeEnum;
-        lineStyle: string;
         boxContent: ListWidgetValue;
         dataMicroflowEdge?: ListValue;
         parentEdge?: ListAttributeValue<string>;
         childEdge?: ListAttributeValue<string>;
         column?: ListAttributeValue<Big>;
-    }): {
+}): {
     items: Item[];
     beziers: Bezier[];
     focusedItemProps: { x: number; y: number; isRoot: boolean };
