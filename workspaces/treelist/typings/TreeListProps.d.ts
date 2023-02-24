@@ -7,8 +7,6 @@ import { ComponentType, CSSProperties } from "react";
 import { ListValue, ListAttributeValue, ListWidgetValue } from "mendix";
 import { Big } from "big.js";
 
-export type LineTypeEnum = "line" | "bezier" | "square";
-
 export interface TreeListContainerProps {
     name: string;
     class: string;
@@ -21,14 +19,7 @@ export interface TreeListContainerProps {
     hasFocus: ListAttributeValue<boolean>;
     hasChildren?: ListAttributeValue<boolean>;
     showsChildren?: ListAttributeValue<boolean>;
-    elementWidth: number;
-    elementHeight: number;
-    hSpacing: number;
-    vSpacing: number;
-    bezierDelta: number;
-    arrowWidth: number;
-    lineType: LineTypeEnum;
-    lineStyle: string;
+    indentation: number;
     boxContent?: ListWidgetValue;
     dataMicroflowEdge?: ListValue;
     parentEdge?: ListAttributeValue<string>;
@@ -52,14 +43,7 @@ export interface TreeListPreviewProps {
     hasFocus: string;
     hasChildren: string;
     showsChildren: string;
-    elementWidth: number | null;
-    elementHeight: number | null;
-    hSpacing: number | null;
-    vSpacing: number | null;
-    bezierDelta: number | null;
-    arrowWidth: number | null;
-    lineType: LineTypeEnum;
-    lineStyle: string;
+    indentation: number | null;
     boxContent: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
     dataMicroflowEdge: {} | { type: string } | null;
     parentEdge: string;

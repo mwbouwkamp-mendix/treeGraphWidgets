@@ -24,8 +24,8 @@ export function TreeList(props: TreeListContainerProps): ReactElement {
     const itemLayout: ItemLayout = {
         elementWidth: 0,
         elementHeight: 0,
-        horizontalSpacing: props.hSpacing,
-        verticalSpacing: props.vSpacing,
+        horizontalSpacing: props.indentation,
+        verticalSpacing: 0,
         horizontalSpacingFactor: 0,
     };
 

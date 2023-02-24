@@ -323,7 +323,7 @@ const setXValuesNonBottom = (level: Item[]): Item[] => {
  */
 const setXValuesTree = (items: Item[], itemLayout: ItemLayout): Item[] => {
     return items.map(item => {
-        item.x = itemLayout.verticalSpacing * item.level;
+        item.x = itemLayout.horizontalSpacing * item.level;
         return item;
     });
 };

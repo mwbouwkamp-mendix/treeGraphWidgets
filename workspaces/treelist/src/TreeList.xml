@@ -53,42 +53,9 @@
             </property>
         </propertyGroup>
         <propertyGroup caption="Elements">
-            <property key="elementWidth" type="integer" required="true" defaultValue="200">
-                <caption>Width</caption>
-                <description>Width in px of the elements</description>
-            </property>
-            <property key="elementHeight" type="integer" required="true" defaultValue="100">
-                <caption>Height</caption>
-                <description>Height in px of the elements</description>
-            </property>
-            <property key="hSpacing" type="integer" required="true" defaultValue="40">
-                <caption>Horizontal spacing</caption>
-                <description>Horizontal spacing in px between elements</description>
-            </property>
-            <property key="vSpacing" type="integer" required="true" defaultValue="20">
-                <caption>Vertical spacing</caption>
-                <description>Vertical spacing in px between elements</description>
-            </property>
-            <property key="bezierDelta" type="integer" required="true" defaultValue="40">
-                <caption>Bezier control</caption>
-                <description>Relative position (%) of bezier control point to the bezier start-x and end-x</description>
-            </property>
-            <property key="arrowWidth" type="integer" required="true" defaultValue="12">
-                <caption>Arrow size</caption>
-                <description>Horizontal size of the arrow (vertical size will be adjusted automatically)</description>
-            </property>
-            <property key="lineType" type="enumeration" defaultValue="line">
-                <caption>Line Type</caption>
-                <description>Type of line between objects</description>
-                <enumerationValues>
-                    <enumerationValue key="line">Straight line</enumerationValue>
-                    <enumerationValue key="bezier">Bezier curve</enumerationValue>
-                    <enumerationValue key="square">Right-angled lines</enumerationValue>
-                </enumerationValues>
-            </property>        
-            <property key="lineStyle" type="string" required="false" defaultValue="solid 2px black">
-                <caption>Line style</caption>
-                <description>Line style (format: style width color; for style solid , dotted and dashed are supported; default: solid 2px black)</description>
+            <property key="indentation" type="integer" required="true" defaultValue="20">
+                <caption>Indentation</caption>
+                <description>Indentation in px for child levels</description>
             </property>
         </propertyGroup>
         <propertyGroup caption="PluggableElements">
