@@ -8,15 +8,6 @@
     <icon/>
     <properties>
         <propertyGroup caption="Workspace">
-            <property key="widgetType" type="enumeration" defaultValue="tree">
-                <caption>Widtget Type</caption>
-                <description>Render type for the data</description>
-                <enumerationValues>
-                    <enumerationValue key="tree">Tree</enumerationValue>
-                    <enumerationValue key="organogram">Organogram</enumerationValue>
-                    <enumerationValue key="pert">Pert</enumerationValue>
-                </enumerationValues>
-            </property>        
             <property key="height" type="integer" required="true" defaultValue="400">
                 <caption>Height</caption>
                 <description>Height in px of the workspace (width is 100% of parent)</description>
@@ -104,33 +95,6 @@
             <property key="boxContent" type="widgets" required="false" dataSource="dataMicroflow">
 	            <caption>BoxContent</caption>
 	            <description>Content of a box</description>
-            </property>
-        </propertyGroup>
-        <propertyGroup caption="Pert">
-            <property key="dataMicroflowEdge" type="datasource" isList="true" required="false">
-                <caption>Datasource</caption>
-                <description />
-            </property>
-            <property key="parentEdge" type="attribute" dataSource="dataMicroflowEdge" required="false">
-                <caption>Parent association</caption>
-                <description>Association to the parent node (link to unique descriptor)</description>
-                <attributeTypes>
-                    <attributeType name="String"/>
-                </attributeTypes>
-            </property>
-            <property key="childEdge" type="attribute" dataSource="dataMicroflowEdge" required="false">
-                <caption>Child association</caption>
-                <description>Association to the child node (link to unique descriptor)</description>
-                <attributeTypes>
-                    <attributeType name="String"/>
-                </attributeTypes>
-            </property>
-            <property key="column" type="attribute" dataSource="dataMicroflow" required="false">
-                <caption>Column index</caption>
-                <description>Column index (pert, starts at 0)</description>
-                <attributeTypes>
-                    <attributeType name="Integer"/>
-                </attributeTypes>
             </property>
         </propertyGroup>
     </properties>

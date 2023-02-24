@@ -5,9 +5,6 @@
  */
 import { ComponentType, CSSProperties } from "react";
 import { ListValue, ListAttributeValue, ListWidgetValue } from "mendix";
-import { Big } from "big.js";
-
-export type WidgetTypeEnum = "tree" | "organogram" | "pert";
 
 export type LineTypeEnum = "line" | "bezier" | "square";
 
@@ -16,7 +13,6 @@ export interface OrgChartContainerProps {
     class: string;
     style?: CSSProperties;
     tabIndex?: number;
-    widgetType: WidgetTypeEnum;
     height: number;
     dataMicroflow: ListValue;
     self: ListAttributeValue<string>;
@@ -33,10 +29,6 @@ export interface OrgChartContainerProps {
     lineType: LineTypeEnum;
     lineStyle: string;
     boxContent?: ListWidgetValue;
-    dataMicroflowEdge?: ListValue;
-    parentEdge?: ListAttributeValue<string>;
-    childEdge?: ListAttributeValue<string>;
-    column?: ListAttributeValue<Big>;
 }
 
 export interface OrgChartPreviewProps {
@@ -48,7 +40,6 @@ export interface OrgChartPreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
-    widgetType: WidgetTypeEnum;
     height: number | null;
     dataMicroflow: {} | { type: string } | null;
     self: string;
@@ -65,8 +56,4 @@ export interface OrgChartPreviewProps {
     lineType: LineTypeEnum;
     lineStyle: string;
     boxContent: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
-    dataMicroflowEdge: {} | { type: string } | null;
-    parentEdge: string;
-    childEdge: string;
-    column: string;
 }

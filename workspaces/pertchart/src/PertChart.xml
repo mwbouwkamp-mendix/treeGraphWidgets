@@ -8,15 +8,6 @@
     <icon/>
     <properties>
         <propertyGroup caption="Workspace">
-            <property key="widgetType" type="enumeration" defaultValue="tree">
-                <caption>Widtget Type</caption>
-                <description>Render type for the data</description>
-                <enumerationValues>
-                    <enumerationValue key="tree">Tree</enumerationValue>
-                    <enumerationValue key="organogram">Organogram</enumerationValue>
-                    <enumerationValue key="pert">Pert</enumerationValue>
-                </enumerationValues>
-            </property>        
             <property key="height" type="integer" required="true" defaultValue="400">
                 <caption>Height</caption>
                 <description>Height in px of the workspace (width is 100% of parent)</description>

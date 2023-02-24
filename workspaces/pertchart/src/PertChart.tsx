@@ -39,7 +39,7 @@ export function PertChart(props: PertChartContainerProps): ReactElement {
 
     const { items, beziers, focusedItemProps } = useScreenElements(
         {
-            widgetType: props.widgetType,
+            widgetType: "pert",
             dataMicroflow: props.dataMicroflow,
             self: props.self,
             parent: props.parent,
@@ -68,20 +68,18 @@ export function PertChart(props: PertChartContainerProps): ReactElement {
                 height: props.height
             }}
         >
-            {props.widgetType === "pert" && (
-                <Pert
-                    width={width.current}
-                    height={props.height}
-                    elementWidth={props.elementWidth}
-                    elementHeight={props.elementHeight}
-                    focusedItemProps={focusedItemProps}
-                    items={items}
-                    beziers={beziers}
-                    lineType={props.lineType}
-                    lineStyle={props.lineStyle}
-                    arrowWidth={props.arrowWidth}
-                />
-            )}
+            <Pert
+                width={width.current}
+                height={props.height}
+                elementWidth={props.elementWidth}
+                elementHeight={props.elementHeight}
+                focusedItemProps={focusedItemProps}
+                items={items}
+                beziers={beziers}
+                lineType={props.lineType}
+                lineStyle={props.lineStyle}
+                arrowWidth={props.arrowWidth}
+            />
         </div>
     );
 }

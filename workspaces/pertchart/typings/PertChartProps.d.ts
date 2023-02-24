@@ -7,8 +7,6 @@ import { ComponentType, CSSProperties } from "react";
 import { ListValue, ListAttributeValue, ListWidgetValue } from "mendix";
 import { Big } from "big.js";
 
-export type WidgetTypeEnum = "tree" | "organogram" | "pert";
-
 export type LineTypeEnum = "line" | "bezier" | "square";
 
 export interface PertChartContainerProps {
@@ -16,7 +14,6 @@ export interface PertChartContainerProps {
     class: string;
     style?: CSSProperties;
     tabIndex?: number;
-    widgetType: WidgetTypeEnum;
     height: number;
     dataMicroflow: ListValue;
     self: ListAttributeValue<string>;
@@ -48,7 +45,6 @@ export interface PertChartPreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
-    widgetType: WidgetTypeEnum;
     height: number | null;
     dataMicroflow: {} | { type: string } | null;
     self: string;

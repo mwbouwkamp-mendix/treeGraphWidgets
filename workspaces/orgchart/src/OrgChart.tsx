@@ -39,7 +39,7 @@ export function OrgChart(props: OrgChartContainerProps): ReactElement {
 
     const { items, beziers, focusedItemProps } = useScreenElements(
         {
-            widgetType: props.widgetType,
+            widgetType: "organogram",
             dataMicroflow: props.dataMicroflow,
             self: props.self,
             parent: props.parent,
@@ -49,10 +49,10 @@ export function OrgChart(props: OrgChartContainerProps): ReactElement {
             itemLayout,
             lineLayout,
             boxContent: props.boxContent,
-            dataMicroflowEdge: props.dataMicroflowEdge,
-            parentEdge: props.parentEdge,
-            childEdge: props.childEdge,
-            column: props.column
+            dataMicroflowEdge: undefined,
+            parentEdge: undefined,
+            childEdge: undefined,
+            column: undefined
         }
     );
 
@@ -69,20 +69,18 @@ export function OrgChart(props: OrgChartContainerProps): ReactElement {
                 height: props.height
             }}
         >
-            {props.widgetType === "organogram" && (
-                <Organogram
-                    width={width.current}
-                    height={props.height}
-                    elementWidth={props.elementWidth}
-                    elementHeight={props.elementHeight}
-                    focusedItemProps={focusedItemProps}
-                    items={items}
-                    lineStyle={props.lineStyle}
-                    beziers={beziers}
-                    lineType={props.lineType}
-                    arrowWidth={props.arrowWidth}
-                />
-            )}
+            <Organogram
+                width={width.current}
+                height={props.height}
+                elementWidth={props.elementWidth}
+                elementHeight={props.elementHeight}
+                focusedItemProps={focusedItemProps}
+                items={items}
+                lineStyle={props.lineStyle}
+                beziers={beziers}
+                lineType={props.lineType}
+                arrowWidth={props.arrowWidth}
+            />
         </div>
     );
 }
