@@ -1,5 +1,6 @@
+import { LineLayout } from "../models/LineLayout";
 import { Bezier } from "../models/Bezier";
-import { Dimensions } from "../models/Dimensions";
+import { ItemLayout } from "../models/ItemLayout";
 import { Item } from "../models/Item";
 
 /**
@@ -16,8 +17,8 @@ import { Item } from "../models/Item";
  * @param lineType Type of line to be generated
  * @returns Bezier[] with the generated Beziers
  */
-const generateBeziersPert = (items: Item[], dimensions: Dimensions, lineType: string): Bezier[] => {
-    const arrowCompensation = lineType === "bezier" ? dimensions.arrowWidth : 0;
+const generateBeziersPert = (items: Item[], itemLayout: ItemLayout, lineLayout: LineLayout): Bezier[] => {
+    const arrowCompensation = lineLayout.lineType === "bezier" ? lineLayout.arrowWidth : 0;
 
     return items
         .filter(item => item.children)
@@ -35,41 +36,41 @@ const generateBeziersPert = (items: Item[], dimensions: Dimensions, lineType: st
                     let controlEndY = 0;
 
                     if (item.x < child.x) {
-                        startX += dimensions.elementWidth;
-                        startY += dimensions.elementHeight / 2;
+                        startX += itemLayout.elementWidth;
+                        startY += itemLayout.elementHeight / 2;
                         endX -= arrowCompensation;
-                        endY += dimensions.elementHeight / 2;
-                        controlStartX = startX + (dimensions.bezierDelta * Math.abs(endX - startX)) / 100;
+                        endY += itemLayout.elementHeight / 2;
+                        controlStartX = startX + (lineLayout.bezierDelta * Math.abs(endX - startX)) / 100;
                         controlStartY = startY;
-                        controlEndX = endX - (dimensions.bezierDelta * Math.abs(endX - startX)) / 100;
+                        controlEndX = endX - (lineLayout.bezierDelta * Math.abs(endX - startX)) / 100;
                         controlEndY = endY;
                     } else if (item.x > child.x) {
-                        startY += dimensions.elementHeight / 2;
-                        endX += dimensions.elementWidth + arrowCompensation;
-                        endY += dimensions.elementHeight / 2;
-                        controlStartX = startX - (dimensions.bezierDelta * Math.abs(endX - startX)) / 100;
+                        startY += itemLayout.elementHeight / 2;
+                        endX += itemLayout.elementWidth + arrowCompensation;
+                        endY += itemLayout.elementHeight / 2;
+                        controlStartX = startX - (lineLayout.bezierDelta * Math.abs(endX - startX)) / 100;
                         controlStartY = startY;
-                        controlEndX = endX + (dimensions.bezierDelta * Math.abs(endX - startX)) / 100;
+                        controlEndX = endX + (lineLayout.bezierDelta * Math.abs(endX - startX)) / 100;
                         controlEndY = endY;
                     } else if (item.y < child.y) {
-                        startX += dimensions.elementWidth / 2;
-                        startY += dimensions.elementHeight;
-                        endX += dimensions.elementWidth / 2;
+                        startX += itemLayout.elementWidth / 2;
+                        startY += itemLayout.elementHeight;
+                        endX += itemLayout.elementWidth / 2;
                         endY -= arrowCompensation;
                         controlStartX = startX;
-                        controlStartY = startY + (dimensions.bezierDelta * Math.abs(endY - startY)) / 100;
+                        controlStartY = startY + (lineLayout.bezierDelta * Math.abs(endY - startY)) / 100;
                         controlEndX = endX;
-                        controlEndY = endY - (dimensions.bezierDelta * Math.abs(endY - startY)) / 100;
+                        controlEndY = endY - (lineLayout.bezierDelta * Math.abs(endY - startY)) / 100;
                     } else if (item.y > child.y) {
-                        startX += dimensions.elementWidth / 2;
-                        endX += dimensions.elementWidth / 2;
-                        endY += dimensions.elementHeight + arrowCompensation;
+                        startX += itemLayout.elementWidth / 2;
+                        endX += itemLayout.elementWidth / 2;
+                        endY += itemLayout.elementHeight + arrowCompensation;
                         controlStartX = startX;
-                        controlStartY = startY - (dimensions.bezierDelta * Math.abs(endY - startY)) / 100;
+                        controlStartY = startY - (lineLayout.bezierDelta * Math.abs(endY - startY)) / 100;
                         controlEndX = endX;
-                        controlEndY = endY + (dimensions.bezierDelta * Math.abs(endY - startY)) / 100;
+                        controlEndY = endY + (lineLayout.bezierDelta * Math.abs(endY - startY)) / 100;
                     }
-                    return lineType === "bezier"
+                    return lineLayout.lineType === "bezier"
                         ? {
                               id: startX + "-" + startY + "-" + endX + "-" + endY + Math.round(Math.random() * 1000000),
                               start: { x: startX, y: startY },
@@ -93,11 +94,11 @@ const generateBeziersPert = (items: Item[], dimensions: Dimensions, lineType: st
  * @param dimensions Dimensions with information about element width, height and horizontal and vertical spacing
  * @returns Line
  */
-const createVerticalLineParent = (item: Item, dimensions: Dimensions): Bezier => {
-    const startX = item.x + dimensions.elementWidth / 2;
-    const startY = item.y + dimensions.elementHeight;
-    const endX = item.x + dimensions.elementWidth / 2;
-    const endY = item.y + dimensions.elementHeight + dimensions.verticalSpacing / 2;
+const createVerticalLineParent = (item: Item, itemLayout: ItemLayout): Bezier => {
+    const startX = item.x + itemLayout.elementWidth / 2;
+    const startY = item.y + itemLayout.elementHeight;
+    const endX = item.x + itemLayout.elementWidth / 2;
+    const endY = item.y + itemLayout.elementHeight + itemLayout.verticalSpacing / 2;
 
     return {
         id: startX + "-" + startY + "-" + endX + "-" + endY + Math.round(Math.random() * 1000000),
@@ -119,11 +120,11 @@ const createVerticalLineParent = (item: Item, dimensions: Dimensions): Bezier =>
  * @param dimensions Dimensions with information about element width, height and horizontal and vertical spacing
  * @returns Line
  */
-const createHorizontalLine = (item: Item, dimensions: Dimensions): Bezier => {
-    const startX = item.children![0].x + dimensions.elementWidth / 2;
-    const startY = item.y + dimensions.elementHeight + dimensions.verticalSpacing / 2;
-    const endX = item.children![item.children!.length - 1].x + dimensions.elementWidth / 2;
-    const endY = item.y + dimensions.elementHeight + dimensions.verticalSpacing / 2;
+const createHorizontalLine = (item: Item, itemLayout: ItemLayout): Bezier => {
+    const startX = item.children![0].x + itemLayout.elementWidth / 2;
+    const startY = item.y + itemLayout.elementHeight + itemLayout.verticalSpacing / 2;
+    const endX = item.children![item.children!.length - 1].x + itemLayout.elementWidth / 2;
+    const endY = item.y + itemLayout.elementHeight + itemLayout.verticalSpacing / 2;
 
     return {
         id: startX + "-" + startY + "-" + endX + "-" + endY + Math.round(Math.random() * 1000000),
@@ -145,10 +146,10 @@ const createHorizontalLine = (item: Item, dimensions: Dimensions): Bezier => {
  * @param dimensions Dimensions with information about element width, height and horizontal and vertical spacing
  * @returns Line
  */
-const createVerticalLineChild = (item: Item, dimensions: Dimensions): Bezier => {
-    const startX = item.x + dimensions.elementWidth / 2;
-    const startY = item.y - dimensions.verticalSpacing / 2;
-    const endX = item.x + dimensions.elementWidth / 2;
+const createVerticalLineChild = (item: Item, itemLayout: ItemLayout): Bezier => {
+    const startX = item.x + itemLayout.elementWidth / 2;
+    const startY = item.y - itemLayout.verticalSpacing / 2;
+    const endX = item.x + itemLayout.elementWidth / 2;
     const endY = item.y;
     return {
         id: startX + "-" + startY + "-" + endX + "-" + endY + Math.round(Math.random() * 1000000),
@@ -170,14 +171,14 @@ const createVerticalLineChild = (item: Item, dimensions: Dimensions): Bezier => 
  * @param dimensions Dimensions with information about element width, height and horizontal and vertical spacing
  * @returns
  */
-const createParentLines = (items: Item[], dimensions: Dimensions): Bezier[] => {
+const createParentLines = (items: Item[], itemLayout: ItemLayout): Bezier[] => {
     return items
         .filter(item => item.children?.find(child => child.item))
         .flatMap(item => {
             const itemParentLines = [];
-            itemParentLines.push(createVerticalLineParent(item, dimensions));
+            itemParentLines.push(createVerticalLineParent(item, itemLayout));
             if (item.children!.length > 1) {
-                itemParentLines.push(createHorizontalLine(item, dimensions));
+                itemParentLines.push(createHorizontalLine(item, itemLayout));
             }
             return itemParentLines;
         });
@@ -189,8 +190,8 @@ const createParentLines = (items: Item[], dimensions: Dimensions): Bezier[] => {
  * @param dimensions Dimensions with information about element width, height and horizontal and vertical spacing
  * @returns Line[] with lines from child side
  */
-const createChildLines = (items: Item[], dimensions: Dimensions): Bezier[] => {
-    return items.filter(item => item.parent).map(item => createVerticalLineChild(item, dimensions));
+const createChildLines = (items: Item[], itemLayout: ItemLayout): Bezier[] => {
+    return items.filter(item => item.parent).map(item => createVerticalLineChild(item, itemLayout));
 };
 
 /**
@@ -200,11 +201,11 @@ const createChildLines = (items: Item[], dimensions: Dimensions): Bezier[] => {
  * @param dimensions Dimensions with information about element width, height and horizontal and vertical spacing
  * @returns Line[] with the Lines
  */
-export const generateLines = (items: Item[], dimensions: Dimensions): Bezier[] => {
+export const generateLines = (items: Item[], itemLayout: ItemLayout): Bezier[] => {
     if (!items) {
         return [];
     }
-    return [...createParentLines(items, dimensions), ...createChildLines(items, dimensions)];
+    return [...createParentLines(items, itemLayout), ...createChildLines(items, itemLayout)];
 };
 
 /**
@@ -219,13 +220,13 @@ export const generateLines = (items: Item[], dimensions: Dimensions): Bezier[] =
  * @param lineType Type of line to be generated
  * @returns Bezier[] with the generated Beziers
  */
-const generateBeziersOrganogram = (items: Item[], dimensions: Dimensions, lineType: string): Bezier[] => {
-    switch (lineType) {
+const generateBeziersOrganogram = (items: Item[], itemLayout: ItemLayout, lineLayout: LineLayout): Bezier[] => {
+    switch (lineLayout.lineType) {
         case "square":
-            return generateLines(items, dimensions);
+            return generateLines(items, itemLayout);
         case "bezier":
         case "line":
-            const arrowCompensation = lineType === "bezier" ? dimensions.arrowWidth : 0;
+            const arrowCompensation = lineLayout.lineType === "bezier" ? lineLayout.arrowWidth : 0;
 
             return items
                 .filter(item => item.children && item.showsChildren)
@@ -233,16 +234,16 @@ const generateBeziersOrganogram = (items: Item[], dimensions: Dimensions, lineTy
                     return item
                         .children!.filter(child => child.x !== item.x || child.y !== item.y)
                         .map(child => {
-                            const startX = item.x + dimensions.elementWidth / 2;
-                            const startY = item.y + dimensions.elementHeight;
-                            const endX = child.x + dimensions.elementWidth / 2;
+                            const startX = item.x + itemLayout.elementWidth / 2;
+                            const startY = item.y + itemLayout.elementHeight;
+                            const endX = child.x + itemLayout.elementWidth / 2;
                             const endY = child.y - arrowCompensation;
                             const controlStartX = startX;
-                            const controlStartY = startY + (dimensions.bezierDelta * Math.abs(endY - startY)) / 100;
+                            const controlStartY = startY + (lineLayout.bezierDelta * Math.abs(endY - startY)) / 100;
                             const controlEndX = endX;
-                            const controlEndY = endY - (dimensions.bezierDelta * Math.abs(endY - startY)) / 100;
+                            const controlEndY = endY - (lineLayout.bezierDelta * Math.abs(endY - startY)) / 100;
 
-                            return lineType === "bezier"
+                            return lineLayout.lineType === "bezier"
                                 ? {
                                       id:
                                           startX +
@@ -274,7 +275,7 @@ const generateBeziersOrganogram = (items: Item[], dimensions: Dimensions, lineTy
                         });
                 });
         default:
-            throw new Error("Unsupported lineType: " + lineType);
+            throw new Error("Unsupported lineType: " + lineLayout.lineType);
     }
 };
 
@@ -294,8 +295,8 @@ const generateBeziersOrganogram = (items: Item[], dimensions: Dimensions, lineTy
  */
 export const generateBeziers = (
     items: Item[],
-    dimensions: Dimensions,
-    lineType: string,
+    itemLayout: ItemLayout,
+    lineLayout: LineLayout,
     widgetType: string
 ): Bezier[] => {
     if (!items) {
@@ -304,9 +305,9 @@ export const generateBeziers = (
 
     switch (widgetType) {
         case "pert":
-            return generateBeziersPert(items, dimensions, lineType);
+            return generateBeziersPert(items, itemLayout, lineLayout);
         case "organogram":
-            return generateBeziersOrganogram(items, dimensions, lineType);
+            return generateBeziersOrganogram(items, itemLayout, lineLayout);
         case "tree":
             throw new Error("Tree does not support bezier curves");
         default:

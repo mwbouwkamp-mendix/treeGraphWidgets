@@ -22,7 +22,7 @@ export function TreeList(props: TreeListContainerProps): ReactElement {
 
     const { items } = useScreenElements(
         {
-            widgetType: props.widgetType,
+            widgetType: "tree",
             dataMicroflow: props.dataMicroflow,
             self: props.self,
             parent: props.parent,
@@ -56,7 +56,7 @@ export function TreeList(props: TreeListContainerProps): ReactElement {
                 height: props.height
             }}
         >
-            {props.widgetType === "tree" && <Tree items={items} />}
+            <Tree items={items} />
         </div>
     );
 }

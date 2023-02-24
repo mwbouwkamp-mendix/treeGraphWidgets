@@ -5,7 +5,8 @@ import { createBeziers, createItems, getFocussedItemProps } from "../utils/Scree
 import Big from "big.js";
 import { WidgetTypeEnum, LineTypeEnum } from "@treegraphwidgets/treegraphwidgetscore/typings/TreeGraphWidgetsCoreProps";
 import { ListValue, ListAttributeValue, ListWidgetValue } from "mendix";
-import { Dimensions } from "../models/Dimensions";
+import { ItemLayout } from "../models/ItemLayout";
+import { LineLayout } from "../models/LineLayout";
 
 const HORIZONTAL_SPACING_FACTOR = 3;
 
@@ -35,15 +36,19 @@ const useScreenElements = (props:
     beziers: Bezier[];
     focusedItemProps: { x: number; y: number; isRoot: boolean };
 } => {
-    const dimensions: Dimensions = {
+    const itemLayout: ItemLayout = {
         elementWidth: props.elementWidth,
         elementHeight: props.elementHeight,
         horizontalSpacing: props.hSpacing,
         verticalSpacing: props.vSpacing,
         horizontalSpacingFactor: HORIZONTAL_SPACING_FACTOR,
+    };
+
+    const lineLayout: LineLayout = {
+        lineType: props.lineType,
         bezierDelta: props.bezierDelta,
         arrowWidth: props.arrowWidth
-    };
+    }
 
     const [screenElements, setScreenElements] = useState<{
         items: Item[];
@@ -65,7 +70,7 @@ const useScreenElements = (props:
                 props.self,
                 props.hasFocus,
                 props.boxContent,
-                dimensions,
+                itemLayout,
                 props.widgetType,
                 props.dataMicroflowEdge,
                 props.parent,
@@ -79,8 +84,8 @@ const useScreenElements = (props:
             const beziers = createBeziers(
                 props.widgetType,
                 items, 
-                dimensions
-                , props.lineType
+                itemLayout,
+                lineLayout
             );
         
             const focusedItemProps = getFocussedItemProps(

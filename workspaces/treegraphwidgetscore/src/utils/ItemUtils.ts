@@ -1,4 +1,4 @@
-import { Dimensions } from "../models/Dimensions";
+import { ItemLayout } from "../models/ItemLayout";
 import { ListAttributeValue, ObjectItem, ListWidgetValue } from "mendix";
 import { Item } from "../models/Item";
 import { Edge } from "../models/Edge";
@@ -284,17 +284,17 @@ const isSameHorizontalGroup = (firstItem: Item, secondItem: Item, items: Item[])
  * @param level the level (Item[]) for which to set the x values
  * @returns Item[], the updated items
  */
-const setXValuesBottom = (level: Item[], items: Item[], dimensions: Dimensions): Item[] => {
+const setXValuesBottom = (level: Item[], items: Item[], itemLayout: ItemLayout): Item[] => {
     return level.reduce((accumulator, item, itemIndex) => {
         if (itemIndex === 0) {
             return [item];
         }
         const prevItem = accumulator[accumulator.length - 1];
         const spacer = isSameHorizontalGroup(item, prevItem, items)
-            ? dimensions.horizontalSpacing
-            : dimensions.horizontalSpacing * dimensions.horizontalSpacingFactor;
+            ? itemLayout.horizontalSpacing
+            : itemLayout.horizontalSpacing * itemLayout.horizontalSpacingFactor;
 
-        item.x = accumulator[accumulator.length - 1].x + spacer + dimensions.elementWidth;
+        item.x = accumulator[accumulator.length - 1].x + spacer + itemLayout.elementWidth;
 
         return [...accumulator, item];
     }, [] as Item[]);
@@ -321,9 +321,9 @@ const setXValuesNonBottom = (level: Item[]): Item[] => {
  * @param dimensions Dimensions with information about element width, height and horizontal and vertical spacing
  * @returns Item[], the updated items
  */
-const setXValuesTree = (items: Item[], dimensions: Dimensions): Item[] => {
+const setXValuesTree = (items: Item[], itemLayout: ItemLayout): Item[] => {
     return items.map(item => {
-        item.x = dimensions.verticalSpacing * item.level;
+        item.x = itemLayout.verticalSpacing * item.level;
         return item;
     });
 };
@@ -335,14 +335,14 @@ const setXValuesTree = (items: Item[], dimensions: Dimensions): Item[] => {
  * @param dimensions Dimensions with information about element width, height and horizontal and vertical spacing
  * @returns Item[], the updated items
  */
-const setXValuesOrganogram = (items: Item[], dimensions: Dimensions): Item[] => {
+const setXValuesOrganogram = (items: Item[], itemLayout: ItemLayout): Item[] => {
     const depth = Math.max(...items.map(item => item.level));
 
     const levels = [...Array(depth + 1).keys()].map(i => [...items].filter(item => item.level === i)).reverse();
 
     return levels.flatMap((level, levelIndex) => {
         if (levelIndex === 0) {
-            return setXValuesBottom(level, items, dimensions);
+            return setXValuesBottom(level, items, itemLayout);
         }
         return setXValuesNonBottom(level);
     });
@@ -355,9 +355,9 @@ const setXValuesOrganogram = (items: Item[], dimensions: Dimensions): Item[] => 
  * @param dimensions Dimensions with information about element width, height and horizontal and vertical spacing
  * @returns Item[], the updated items
  */
-const setXValuesPert = (items: Item[], dimensions: Dimensions): Item[] => {
+const setXValuesPert = (items: Item[], itemLayout: ItemLayout): Item[] => {
     return items.map(item => {
-        item.x = item.level * (dimensions.elementWidth + dimensions.horizontalSpacing);
+        item.x = item.level * (itemLayout.elementWidth + itemLayout.horizontalSpacing);
         return item;
     });
 };
@@ -370,14 +370,14 @@ const setXValuesPert = (items: Item[], dimensions: Dimensions): Item[] => {
  * @param widgetType String representation of the type of widget
  * @returns Item[], the updated items
  */
-const setXValues = (items: Item[], dimensions: Dimensions, widgetType: string): Item[] => {
+const setXValues = (items: Item[], itemLayout: ItemLayout, widgetType: string): Item[] => {
     switch (widgetType) {
         case "tree":
-            return setXValuesTree(items, dimensions);
+            return setXValuesTree(items, itemLayout);
         case "organogram":
-            return setXValuesOrganogram(items, dimensions);
+            return setXValuesOrganogram(items, itemLayout);
         case "pert":
-            return setXValuesPert(items, dimensions);
+            return setXValuesPert(items, itemLayout);
         default:
             throw new Error("Unsupported widget type: " + widgetType);
     }
@@ -389,9 +389,9 @@ const setXValues = (items: Item[], dimensions: Dimensions, widgetType: string): 
  * @param dimensions Dimensions with information about element width, height and horizontal and vertical spacing
  * @returns Item[], the updated items
  */
-const setYValuesOrganogram = (items: Item[], dimensions: Dimensions): Item[] => {
+const setYValuesOrganogram = (items: Item[], itemLayout: ItemLayout): Item[] => {
     return items.map(item => {
-        item.y = item.level * (dimensions.elementHeight + dimensions.verticalSpacing);
+        item.y = item.level * (itemLayout.elementHeight + itemLayout.verticalSpacing);
         return item;
     });
 };
@@ -437,10 +437,10 @@ const getParentItems = (childItem: Item, items: Item[]): Item[] => {
 //     });
 // }
 
-const itemsOverlappingY = (firstItem: Item, secondItem: Item, dimensions: Dimensions): boolean => {
+const itemsOverlappingY = (firstItem: Item, secondItem: Item, itemLayout: ItemLayout): boolean => {
     return (
-        firstItem.y < secondItem.y + dimensions.elementHeight + dimensions.verticalSpacing &&
-        firstItem.y + dimensions.elementHeight + dimensions.verticalSpacing > secondItem.y
+        firstItem.y < secondItem.y + itemLayout.elementHeight + itemLayout.verticalSpacing &&
+        firstItem.y + itemLayout.elementHeight + itemLayout.verticalSpacing > secondItem.y
     );
 };
 
@@ -469,7 +469,7 @@ const fixStrainInLevel = (levelItems: Item[], items: Item[]): void => {
  * @param dimensions Dimensions with information about element width, height and horizontal and vertical spacing
  * @returns Item[], the updated items
  */
-const setYValuesPert = (items: Item[], dimensions: Dimensions): Item[] => {
+const setYValuesPert = (items: Item[], itemLayout: ItemLayout): Item[] => {
     // const itemsByLevel = items.sort((a, b) => a.level - b.level);
 
     const minLevel = items.map(item => item.level).reduce((a, b) => (b < a ? b : a), Number.MAX_VALUE);
@@ -483,7 +483,7 @@ const setYValuesPert = (items: Item[], dimensions: Dimensions): Item[] => {
 
     zeroLevelItems.map(item => {
         item.y = currentY;
-        currentY += dimensions.elementHeight + dimensions.verticalSpacing;
+        currentY += itemLayout.elementHeight + itemLayout.verticalSpacing;
         return item;
     });
 
@@ -495,7 +495,7 @@ const setYValuesPert = (items: Item[], dimensions: Dimensions): Item[] => {
             const parents = getParentItems(currentItem, items);
             currentItem.y = parents.map(parent => parent.y).reduce((a, b) => a + b, 0) / parents.length;
             if (currentY !== Number.MIN_VALUE && currentItem.y <= currentY) {
-                currentItem.y = currentY + dimensions.elementHeight + dimensions.verticalSpacing;
+                currentItem.y = currentY + itemLayout.elementHeight + itemLayout.verticalSpacing;
             }
             currentY = currentItem.y;
         }
@@ -510,7 +510,7 @@ const setYValuesPert = (items: Item[], dimensions: Dimensions): Item[] => {
     for (let i = minLevel + 1; i <= maxLevel; i++) {
         const levelItems = otherLevelItems.filter(item => item.level === i);
         for (let j = 0; j < levelItems.length - 1; j++) {
-            if (itemsOverlappingY(levelItems[j], levelItems[j + 1], dimensions)) {
+            if (itemsOverlappingY(levelItems[j], levelItems[j + 1], itemLayout)) {
                 fixedOverlap = true;
                 const averageY = (levelItems[j].y + levelItems[j + 1].y) / 2;
                 for (let k = 0; k < levelItems.length; k++) {
@@ -518,8 +518,8 @@ const setYValuesPert = (items: Item[], dimensions: Dimensions): Item[] => {
                         k <= j
                             ? levelItems[k].y +
                               (averageY - levelItems[k].y) -
-                              (dimensions.elementHeight + dimensions.verticalSpacing / 2)
-                            : levelItems[k].y + (averageY - levelItems[k].y) + dimensions.verticalSpacing / 2;
+                              (itemLayout.elementHeight + itemLayout.verticalSpacing / 2)
+                            : levelItems[k].y + (averageY - levelItems[k].y) + itemLayout.verticalSpacing / 2;
                 }
             }
         }
@@ -609,12 +609,12 @@ const setYValuesPert = (items: Item[], dimensions: Dimensions): Item[] => {
  * @param dimensions Dimensions with information about element width, height and horizontal and vertical spacing
  * @returns Item[], the updated items
  */
-const setYValues = (items: Item[], dimensions: Dimensions, widgetType: string): Item[] => {
+const setYValues = (items: Item[], itemLayout: ItemLayout, widgetType: string): Item[] => {
     switch (widgetType) {
         case "organogram":
-            return setYValuesOrganogram(items, dimensions);
+            return setYValuesOrganogram(items, itemLayout);
         case "pert":
-            return setYValuesPert(items, dimensions);
+            return setYValuesPert(items, itemLayout);
         case "tree":
         default:
             throw new Error("Unsupported widget type: " + widgetType);
@@ -684,7 +684,7 @@ export const generateItems = (
     selfAttribute: ListAttributeValue,
     hasFocusAttribute: ListAttributeValue,
     boxContent: ListWidgetValue,
-    dimensions: Dimensions,
+    itemLayout: ItemLayout,
     widgetType: string,
     edgeObjectItems?: ObjectItem[],
     parentAttribute?: ListAttributeValue,
@@ -718,10 +718,10 @@ export const generateItems = (
         //     setHasChildren(items, hasChildren);
     }
 
-    items = setXValues(items, dimensions, widgetType);
+    items = setXValues(items, itemLayout, widgetType);
     items = removeDummyItems(items);
     if (widgetType === "organogram" || widgetType === "pert") {
-        items = setYValues(items, dimensions, widgetType);
+        items = setYValues(items, itemLayout, widgetType);
     }
     if (widgetType === "tree") {
         items = sortTree(items);

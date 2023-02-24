@@ -2,16 +2,17 @@ import { generateItems, getFocussedItem, getRootItem } from "./ItemUtils";
 import { generateBeziers } from "./BezierUtils";
 import { Item } from "../models/Item";
 import { ListValue, ListAttributeValue, ListWidgetValue } from "mendix";
-import { WidgetTypeEnum, LineTypeEnum } from "@treegraphwidgets/treegraphwidgetscore/typings/TreeGraphWidgetsCoreProps";
+import { WidgetTypeEnum } from "@treegraphwidgets/treegraphwidgetscore/typings/TreeGraphWidgetsCoreProps";
 import Big from "big.js";
-import { Dimensions } from "../models/Dimensions";
+import { ItemLayout } from "../models/ItemLayout";
+import { LineLayout } from "../models/LineLayout";
 
 export const createItems = (
     dataMicroflow: ListValue,
     self: ListAttributeValue<string>,
     hasFocus: ListAttributeValue<boolean>,
     boxContent: ListWidgetValue,
-    dimensions: Dimensions,
+    dimensions: ItemLayout,
     widgetType: WidgetTypeEnum,
     dataMicroflowEdge?: ListValue,
     parent?: ListAttributeValue<string>,
@@ -41,12 +42,14 @@ export const createItems = (
 export const createBeziers = (
     widgetType: WidgetTypeEnum,
     items: Item[],
-    dimensions: Dimensions,
-    lineType: LineTypeEnum
+    itemLayout: ItemLayout,
+    lineLayout: LineLayout,
 ) => {
-    return widgetType === "organogram" || widgetType === "pert"
-        ? generateBeziers(items, dimensions, lineType, widgetType)
-        : [];
+    if (widgetType === "tree") {
+        return [];
+    }
+
+    return generateBeziers(items, itemLayout, lineLayout, widgetType);
 };
 
 export const getFocussedItemProps = (
