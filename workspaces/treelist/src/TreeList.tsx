@@ -41,10 +41,10 @@ export function TreeList(props: TreeListContainerProps): ReactElement {
             itemLayout,
             lineLayout: undefined,
             boxContent: props.boxContent,
-            dataMicroflowEdge: props.dataMicroflowEdge,
-            parentEdge: props.parentEdge,
-            childEdge: props.childEdge,
-            column: props.column
+            dataMicroflowEdge: undefined,
+            parentEdge: undefined,
+            childEdge: undefined,
+            column: undefined
         }
     );
 

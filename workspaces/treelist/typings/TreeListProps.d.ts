@@ -5,7 +5,6 @@
  */
 import { ComponentType, CSSProperties } from "react";
 import { ListValue, ListAttributeValue, ListWidgetValue } from "mendix";
-import { Big } from "big.js";
 
 export interface TreeListContainerProps {
     name: string;
@@ -21,10 +20,6 @@ export interface TreeListContainerProps {
     showsChildren?: ListAttributeValue<boolean>;
     indentation: number;
     boxContent?: ListWidgetValue;
-    dataMicroflowEdge?: ListValue;
-    parentEdge?: ListAttributeValue<string>;
-    childEdge?: ListAttributeValue<string>;
-    column?: ListAttributeValue<Big>;
 }
 
 export interface TreeListPreviewProps {
@@ -45,8 +40,4 @@ export interface TreeListPreviewProps {
     showsChildren: string;
     indentation: number | null;
     boxContent: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
-    dataMicroflowEdge: {} | { type: string } | null;
-    parentEdge: string;
-    childEdge: string;
-    column: string;
 }
