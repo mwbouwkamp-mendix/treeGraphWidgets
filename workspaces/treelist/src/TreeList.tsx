@@ -6,6 +6,7 @@ import classes from "@treegraphwidgets/treegraphwidgetscore/src/TreeGraphWidgets
 
 import "./ui/TreeList.css";
 import Tree from "./components/Tree";
+import { ItemLayout } from "@treegraphwidgets/treegraphwidgetscore/src/models/ItemLayout";
 
 export function TreeList(props: TreeListContainerProps): ReactElement {
     if (
@@ -20,6 +21,14 @@ export function TreeList(props: TreeListContainerProps): ReactElement {
 
     const width = useRef(0);
 
+    const itemLayout: ItemLayout = {
+        elementWidth: 0,
+        elementHeight: 0,
+        horizontalSpacing: props.hSpacing,
+        verticalSpacing: props.vSpacing,
+        horizontalSpacingFactor: 0,
+    };
+
     const { items } = useScreenElements(
         {
             widgetType: "tree",
@@ -29,13 +38,8 @@ export function TreeList(props: TreeListContainerProps): ReactElement {
             hasFocus: props.hasFocus,
             hasChildren: props.hasChildren,
             showsChildren: props.showsChildren,
-            elementWidth: props.elementWidth,
-            elementHeight: props.elementHeight,
-            hSpacing: props.hSpacing,
-            vSpacing: props.vSpacing,
-            bezierDelta: props.bezierDelta,
-            arrowWidth: props.arrowWidth,
-            lineType: props.lineType,
+            itemLayout,
+            lineLayout: undefined,
             boxContent: props.boxContent,
             dataMicroflowEdge: props.dataMicroflowEdge,
             parentEdge: props.parentEdge,

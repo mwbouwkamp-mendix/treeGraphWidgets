@@ -6,6 +6,8 @@ import { PertChartContainerProps } from "../typings/PertChartProps";
 
 import "./ui/PertChart.css";
 import Pert from "./components/Pert";
+import { ItemLayout } from "@treegraphwidgets/treegraphwidgetscore/src/models/ItemLayout";
+import { LineLayout } from "@treegraphwidgets/treegraphwidgetscore/src/models/LineLayout";
 
 export function PertChart(props: PertChartContainerProps): ReactElement {
     if (
@@ -21,6 +23,20 @@ export function PertChart(props: PertChartContainerProps): ReactElement {
 
     const width = useRef(0);
 
+    const itemLayout: ItemLayout = {
+        elementWidth: props.elementWidth,
+        elementHeight: props.elementHeight,
+        horizontalSpacing: props.hSpacing,
+        verticalSpacing: props.vSpacing,
+        horizontalSpacingFactor: 0,
+    };
+
+    const lineLayout: LineLayout = {
+        lineType: props.lineType,
+        bezierDelta: props.bezierDelta,
+        arrowWidth: props.arrowWidth
+    }
+
     const { items, beziers, focusedItemProps } = useScreenElements(
         {
             widgetType: props.widgetType,
@@ -30,13 +46,8 @@ export function PertChart(props: PertChartContainerProps): ReactElement {
             hasFocus: props.hasFocus,
             hasChildren: props.hasChildren,
             showsChildren: props.showsChildren,
-            elementWidth: props.elementWidth,
-            elementHeight: props.elementHeight,
-            hSpacing: props.hSpacing,
-            vSpacing: props.vSpacing,
-            bezierDelta: props.bezierDelta,
-            arrowWidth: props.arrowWidth,
-            lineType: props.lineType,
+            itemLayout,
+            lineLayout,
             boxContent: props.boxContent,
             dataMicroflowEdge: props.dataMicroflowEdge,
             parentEdge: props.parentEdge,

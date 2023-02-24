@@ -5,6 +5,10 @@ import { OrgChartContainerProps } from "../typings/OrgChartProps";
 
 import "./ui/OrgChart.css";
 import Organogram from "./components/Organogram";
+import { ItemLayout } from "@treegraphwidgets/treegraphwidgetscore/src/models/ItemLayout";
+import { LineLayout } from "@treegraphwidgets/treegraphwidgetscore/src/models/LineLayout";
+
+const HORIZONTAL_SPACING_FACTOR = 3;
 
 export function OrgChart(props: OrgChartContainerProps): ReactElement {
     if (
@@ -19,6 +23,20 @@ export function OrgChart(props: OrgChartContainerProps): ReactElement {
 
     const width = useRef(0);
 
+    const itemLayout: ItemLayout = {
+        elementWidth: props.elementWidth,
+        elementHeight: props.elementHeight,
+        horizontalSpacing: props.hSpacing,
+        verticalSpacing: props.vSpacing,
+        horizontalSpacingFactor: HORIZONTAL_SPACING_FACTOR,
+    };
+
+    const lineLayout: LineLayout = {
+        lineType: props.lineType,
+        bezierDelta: props.bezierDelta,
+        arrowWidth: props.arrowWidth
+    }
+
     const { items, beziers, focusedItemProps } = useScreenElements(
         {
             widgetType: props.widgetType,
@@ -28,13 +46,8 @@ export function OrgChart(props: OrgChartContainerProps): ReactElement {
             hasFocus: props.hasFocus,
             hasChildren: props.hasChildren,
             showsChildren: props.showsChildren,
-            elementWidth: props.elementWidth,
-            elementHeight: props.elementHeight,
-            hSpacing: props.hSpacing,
-            vSpacing: props.vSpacing,
-            bezierDelta: props.bezierDelta,
-            arrowWidth: props.arrowWidth,
-            lineType: props.lineType,
+            itemLayout,
+            lineLayout,
             boxContent: props.boxContent,
             dataMicroflowEdge: props.dataMicroflowEdge,
             parentEdge: props.parentEdge,
