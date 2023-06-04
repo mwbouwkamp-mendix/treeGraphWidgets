@@ -2,4 +2,5 @@
     display: flex;
     align-content: stretch;
     position: absolute;
+    overflow: auto;
 }

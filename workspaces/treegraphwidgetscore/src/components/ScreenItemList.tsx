@@ -6,6 +6,7 @@ export interface ScreenItemListProps {
     items: Item[];
     elementWidth: number;
     elementHeight: number;
+    widgetType: string;
 }
 
 const ScreenItemList = (props: ScreenItemListProps): ReactElement => {
@@ -23,6 +24,7 @@ const ScreenItemList = (props: ScreenItemListProps): ReactElement => {
                     width={elementWidth}
                     height={elementHeight}
                     item={item.widgetContent}
+                    widgetType={props.widgetType}
                 />
             ));
     };

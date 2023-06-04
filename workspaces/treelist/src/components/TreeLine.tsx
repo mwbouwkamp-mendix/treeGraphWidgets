@@ -8,9 +8,9 @@ export interface TreeLineProps {
 
 const TreeLine = (props: TreeLineProps): ReactElement => {
     return (
-        <div className={classes.container}>
-            <div style={{ width: props.item.x }}></div>
-            <div className={classes.main}>{props.item.widgetContent}</div>
+        <div className={`tree-list-line ${classes.container}`}>
+            <div className="tree-list-line-indentation" style={{ width: props.item.x }}></div>
+            <div className={`tree-list-line-content ${classes.main}`}>{props.item.widgetContent}</div>
         </div>
     );
 };

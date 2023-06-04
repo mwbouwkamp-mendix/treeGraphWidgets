@@ -64,7 +64,7 @@ export function OrgChart(props: OrgChartContainerProps): ReactElement {
     return (
         <div
             ref={ref}
-            className={classes.organogram}
+            className={`orgchart ${classes.organogram}`}
             style={{
                 height: props.height
             }}

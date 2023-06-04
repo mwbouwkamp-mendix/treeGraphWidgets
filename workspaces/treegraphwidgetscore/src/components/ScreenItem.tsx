@@ -1,4 +1,4 @@
-import React, { createElement, Fragment, ReactElement, ReactNode } from "react";
+import React, { createElement, ReactElement, ReactNode } from "react";
 import classes from "./ScreenItem.module.css";
 
 export interface ScreenElementProps {
@@ -7,6 +7,7 @@ export interface ScreenElementProps {
     width: number;
     height: number;
     item: ReactNode;
+    widgetType: string;
 }
 
 const propsAreEqual = (prevProps: ScreenElementProps, newProps: ScreenElementProps): boolean => {
@@ -20,20 +21,23 @@ const propsAreEqual = (prevProps: ScreenElementProps, newProps: ScreenElementPro
 };
 
 const ScreenItem = (props: ScreenElementProps): ReactElement => {
+    const className = props.widgetType === "organogram"
+        ? "orgchart-element"
+        : props.widgetType === "pert"
+        ? "pertchart-element"
+        : ""
     return (
-        <Fragment>
-            <div
-                className={classes.element}
-                style={{
-                    width: props.width,
-                    height: props.height,
-                    left: props.left,
-                    top: props.top
-                }}
-            >
-                {props.item}
-            </div>
-        </Fragment>
+        <div
+            className={`${className} ${classes.element}`}
+            style={{
+                width: props.width,
+                height: props.height,
+                left: props.left,
+                top: props.top
+            }}
+        >
+            {props.item}
+        </div>
     );
 };
 

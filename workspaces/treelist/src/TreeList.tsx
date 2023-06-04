@@ -55,7 +55,7 @@ export function TreeList(props: TreeListContainerProps): ReactElement {
     return (
         <div
             ref={ref}
-            className={classes.tree}
+            className={`tree-list ${classes.tree}`}
             style={{
                 height: props.height
             }}

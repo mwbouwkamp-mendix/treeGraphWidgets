@@ -63,7 +63,7 @@ export function PertChart(props: PertChartContainerProps): ReactElement {
     return (
         <div
             ref={ref}
-            className={classes.pert}
+            className={`pertchart ${classes.pert}`}
             style={{
                 height: props.height
             }}
