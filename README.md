@@ -80,6 +80,7 @@ Tip: make use of the sample implementation included in the project
 
 ## Demo project
 https://slidingwizard-sandbox.mxapps.io/
+(demo_administrator, XhbOCrXTnkl2)
 
 ## Issues, suggestions and feature requests
 https://github.com/mwbouwkamp-mendix/treeGraphWidgets/
