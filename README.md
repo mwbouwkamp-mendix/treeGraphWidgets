@@ -79,7 +79,7 @@ Tip: make use of the sample implementation included in the project
     * Select the unique identifier of the parent node as the Parent association
 
 ## Demo project
-https://slidingwizard-sandbox.mxapps.io/
+https://breakdownstructure-sandbox.mxapps.io/
 (demo_administrator, XhbOCrXTnkl2)
 
 ## Issues, suggestions and feature requests
