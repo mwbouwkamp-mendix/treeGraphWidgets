@@ -21,11 +21,8 @@ const propsAreEqual = (prevProps: ScreenElementProps, newProps: ScreenElementPro
 };
 
 const ScreenItem = (props: ScreenElementProps): ReactElement => {
-    const className = props.widgetType === "organogram"
-        ? "orgchart-element"
-        : props.widgetType === "pert"
-        ? "pertchart-element"
-        : ""
+    const className =
+        props.widgetType === "organogram" ? "orgchart-element" : props.widgetType === "pert" ? "pertchart-element" : "";
     return (
         <div
             className={`${className} ${classes.element}`}

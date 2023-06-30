@@ -9,11 +9,7 @@ import Tree from "./components/Tree";
 import { ItemLayout } from "@treegraphwidgets/treegraphwidgetscore/src/models/ItemLayout";
 
 export function TreeList(props: TreeListContainerProps): ReactElement {
-    if (
-        !props.dataMicroflow.items ||
-        !props.self ||
-        !props.boxContent
-    ) {
+    if (!props.dataMicroflow.items || !props.self || !props.boxContent) {
         return <div />;
     }
 
@@ -26,27 +22,24 @@ export function TreeList(props: TreeListContainerProps): ReactElement {
         elementHeight: 0,
         horizontalSpacing: props.indentation,
         verticalSpacing: 0,
-        horizontalSpacingFactor: 0,
+        horizontalSpacingFactor: 0
     };
 
-    const { items } = useScreenElements(
-        {
-            widgetType: "tree",
-            dataMicroflow: props.dataMicroflow,
-            self: props.self,
-            parent: props.parent,
-            hasFocus: props.hasFocus,
-            hasChildren: props.hasChildren,
-            showsChildren: props.showsChildren,
-            itemLayout,
-            lineLayout: undefined,
-            boxContent: props.boxContent,
-            dataMicroflowEdge: undefined,
-            parentEdge: undefined,
-            childEdge: undefined,
-            column: undefined
-        }
-    );
+    const { items } = useScreenElements({
+        widgetType: "tree",
+        dataMicroflow: props.dataMicroflow,
+        self: props.self,
+        parent: props.parent,
+        hasFocus: props.hasFocus,
+        showsChildren: props.showsChildren,
+        itemLayout,
+        lineLayout: undefined,
+        boxContent: props.boxContent,
+        dataMicroflowEdge: undefined,
+        parentEdge: undefined,
+        childEdge: undefined,
+        column: undefined
+    });
 
     useEffect(() => {
         width.current = ref.current!.getBoundingClientRect().width;

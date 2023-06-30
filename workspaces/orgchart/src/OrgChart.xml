@@ -37,13 +37,6 @@
                     <attributeType name="Boolean"/>
                 </attributeTypes>
             </property>
-            <property key="hasChildren" type="attribute" dataSource="dataMicroflow" required="false">
-                <caption>Has children?</caption>
-                <description>Widget sets this attribute to true if the Node has children or to false if not</description>
-                <attributeTypes>
-                    <attributeType name="Boolean"/>
-                </attributeTypes>
-            </property>
             <property key="showsChildren" type="attribute" dataSource="dataMicroflow" required="false">
                 <caption>Shows children?</caption>
                 <description>When set to false, the tree under this item will be hidden</description>

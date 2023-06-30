@@ -5,9 +5,13 @@ import Tree from "./components/Tree";
 import classes from "@treegraphwidgets/treegraphwidgetscore/src/TreeGraphWidgetsCore.module.css";
 
 export function preview(props: TreeListPreviewProps): ReactElement {
-    const previewContent = props.boxContent 
-        ? <props.boxContent.renderer><div /></props.boxContent.renderer>
-        : <div />;
+    const previewContent = props.boxContent ? (
+        <props.boxContent.renderer>
+            <div />
+        </props.boxContent.renderer>
+    ) : (
+        <div />
+    );
 
     const items: Item[] = [
         {
@@ -80,18 +84,20 @@ export function preview(props: TreeListPreviewProps): ReactElement {
             hasFocus: true,
             showsChildren: false
         }
-    ]
+    ];
 
-    return <div>
-        <div
-            className={classes.tree}
-            style={{
-                height: props.height ? props.height : 0
-            }}
-        >
-            <Tree items={items} />
+    return (
+        <div>
+            <div
+                className={classes.tree}
+                style={{
+                    height: props.height ? props.height : 0
+                }}
+            >
+                <Tree items={items} />
+            </div>
         </div>
-    </div>;
+    );
 }
 
 export function getPreviewCss(): string {

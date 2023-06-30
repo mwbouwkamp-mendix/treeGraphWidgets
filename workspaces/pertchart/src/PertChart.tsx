@@ -10,12 +10,7 @@ import { ItemLayout } from "@treegraphwidgets/treegraphwidgetscore/src/models/It
 import { LineLayout } from "@treegraphwidgets/treegraphwidgetscore/src/models/LineLayout";
 
 export function PertChart(props: PertChartContainerProps): ReactElement {
-    if (
-        !props.dataMicroflow.items ||
-        !props.dataMicroflowEdge?.items ||
-        !props.self ||
-        !props.boxContent
-    ) {
+    if (!props.dataMicroflow.items || !props.dataMicroflowEdge?.items || !props.self || !props.boxContent) {
         return <div />;
     }
 
@@ -28,33 +23,30 @@ export function PertChart(props: PertChartContainerProps): ReactElement {
         elementHeight: props.elementHeight,
         horizontalSpacing: props.hSpacing,
         verticalSpacing: props.vSpacing,
-        horizontalSpacingFactor: 0,
+        horizontalSpacingFactor: 0
     };
 
     const lineLayout: LineLayout = {
         lineType: props.lineType,
         bezierDelta: props.bezierDelta,
         arrowWidth: props.arrowWidth
-    }
+    };
 
-    const { items, beziers, focusedItemProps } = useScreenElements(
-        {
-            widgetType: "pert",
-            dataMicroflow: props.dataMicroflow,
-            self: props.self,
-            parent: props.parent,
-            hasFocus: props.hasFocus,
-            hasChildren: props.hasChildren,
-            showsChildren: props.showsChildren,
-            itemLayout,
-            lineLayout,
-            boxContent: props.boxContent,
-            dataMicroflowEdge: props.dataMicroflowEdge,
-            parentEdge: props.parentEdge,
-            childEdge: props.childEdge,
-            column: props.column
-        }
-    );
+    const { items, beziers, focusedItemProps } = useScreenElements({
+        widgetType: "pert",
+        dataMicroflow: props.dataMicroflow,
+        self: props.self,
+        parent: undefined,
+        hasFocus: props.hasFocus,
+        showsChildren: undefined,
+        itemLayout,
+        lineLayout,
+        boxContent: props.boxContent,
+        dataMicroflowEdge: props.dataMicroflowEdge,
+        parentEdge: props.parentEdge,
+        childEdge: props.childEdge,
+        column: props.column
+    });
 
     useEffect(() => {
         width.current = ref.current!.getBoundingClientRect().width;

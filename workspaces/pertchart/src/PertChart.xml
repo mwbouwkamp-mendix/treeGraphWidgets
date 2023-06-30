@@ -23,30 +23,9 @@
                     <attributeType name="String"/>
                 </attributeTypes>
             </property>
-            <property key="parent" type="attribute" dataSource="dataMicroflow" required="false">
-                <caption>Parent association</caption>
-                <description>Association to the parent node (link to unique descriptor)</description>
-                <attributeTypes>
-                    <attributeType name="String"/>
-                </attributeTypes>
-            </property>
             <property key="hasFocus" type="attribute" dataSource="dataMicroflow">
                 <caption>Has focus?</caption>
                 <description>First element found by widget with hasFocus set to true will be centered in the widget</description>
-                <attributeTypes>
-                    <attributeType name="Boolean"/>
-                </attributeTypes>
-            </property>
-            <property key="hasChildren" type="attribute" dataSource="dataMicroflow" required="false">
-                <caption>Has children?</caption>
-                <description>Widget sets this attribute to true if the Node has children or to false if not</description>
-                <attributeTypes>
-                    <attributeType name="Boolean"/>
-                </attributeTypes>
-            </property>
-            <property key="showsChildren" type="attribute" dataSource="dataMicroflow" required="false">
-                <caption>Shows children?</caption>
-                <description>When set to false, the tree under this item will be hidden</description>
                 <attributeTypes>
                     <attributeType name="Boolean"/>
                 </attributeTypes>

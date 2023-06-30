@@ -16,7 +16,6 @@ export interface TreeListContainerProps {
     self: ListAttributeValue<string>;
     parent?: ListAttributeValue<string>;
     hasFocus: ListAttributeValue<boolean>;
-    hasChildren?: ListAttributeValue<boolean>;
     showsChildren?: ListAttributeValue<boolean>;
     indentation: number;
     boxContent?: ListWidgetValue;
@@ -36,7 +35,6 @@ export interface TreeListPreviewProps {
     self: string;
     parent: string;
     hasFocus: string;
-    hasChildren: string;
     showsChildren: string;
     indentation: number | null;
     boxContent: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };

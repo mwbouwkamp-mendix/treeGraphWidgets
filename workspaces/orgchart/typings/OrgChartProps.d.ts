@@ -18,7 +18,6 @@ export interface OrgChartContainerProps {
     self: ListAttributeValue<string>;
     parent?: ListAttributeValue<string>;
     hasFocus: ListAttributeValue<boolean>;
-    hasChildren?: ListAttributeValue<boolean>;
     showsChildren?: ListAttributeValue<boolean>;
     elementWidth: number;
     elementHeight: number;
@@ -45,7 +44,6 @@ export interface OrgChartPreviewProps {
     self: string;
     parent: string;
     hasFocus: string;
-    hasChildren: string;
     showsChildren: string;
     elementWidth: number | null;
     elementHeight: number | null;

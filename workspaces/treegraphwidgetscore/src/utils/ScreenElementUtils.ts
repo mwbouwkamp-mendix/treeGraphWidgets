@@ -19,8 +19,7 @@ export const createItems = (
     parentEdge?: ListAttributeValue<string>,
     childEdge?: ListAttributeValue<string>,
     showsChildren?: ListAttributeValue<boolean>,
-    column?: ListAttributeValue<Big>,
-    hasChildren?: ListAttributeValue<boolean>
+    column?: ListAttributeValue<Big>
 ): Item[] => {
     return generateItems(
         dataMicroflow.items!,
@@ -34,8 +33,7 @@ export const createItems = (
         parentEdge,
         childEdge,
         showsChildren,
-        column,
-        hasChildren
+        column
     );
 };
 
@@ -43,7 +41,7 @@ export const createBeziers = (
     widgetType: WidgetTypeEnum,
     items: Item[],
     itemLayout: ItemLayout,
-    lineLayout: LineLayout,
+    lineLayout: LineLayout
 ) => {
     if (widgetType === "tree") {
         return [];
@@ -52,15 +50,13 @@ export const createBeziers = (
     return generateBeziers(items, itemLayout, lineLayout, widgetType);
 };
 
-export const getFocussedItemProps = (
-    items: Item[]
-) => {
+export const getFocussedItemProps = (items: Item[]) => {
     const focusedItem = getFocussedItem(items);
     const rootItem = getRootItem(items)[0];
 
     return focusedItem
         ? { x: focusedItem.x, y: focusedItem.y, isRoot: focusedItem.isRoot }
         : rootItem
-            ? { x: rootItem.x, y: rootItem.y, isRoot: rootItem.isRoot }
-            : { x: 0, y: 0, isRoot: false };
+        ? { x: rootItem.x, y: rootItem.y, isRoot: rootItem.isRoot }
+        : { x: 0, y: 0, isRoot: false };
 };

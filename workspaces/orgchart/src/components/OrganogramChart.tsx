@@ -39,10 +39,10 @@ const OrganogramChart = (props: OrganogramChartProps): ReactElement => {
                 arrowWidth={props.arrowWidth}
                 lineType={props.lineType}
             />
-            <ScreenItemList 
-                items={props.items} 
-                elementWidth={props.elementWidth} 
-                elementHeight={props.elementHeight} 
+            <ScreenItemList
+                items={props.items}
+                elementWidth={props.elementWidth}
+                elementHeight={props.elementHeight}
                 widgetType="organogram"
             />
         </Fragment>
