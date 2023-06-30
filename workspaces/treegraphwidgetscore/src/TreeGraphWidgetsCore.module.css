@@ -9,3 +9,10 @@
     overflow-x: hidden;
     overflow-y: auto;
 }
+
+.pert {
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+    touch-action: none;
+}

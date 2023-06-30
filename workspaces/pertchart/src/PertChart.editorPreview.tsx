@@ -23,28 +23,27 @@ export function preview(props: PertChartPreviewProps): ReactElement {
 
     const width = useRef(0);
 
-    const previewContent = props.boxContent
-        ? <props.boxContent.renderer><div /></props.boxContent.renderer>
-        : <div>empty</div>;
+    const previewContent = props.boxContent ? (
+        <props.boxContent.renderer>
+            <div />
+        </props.boxContent.renderer>
+    ) : (
+        <div>empty</div>
+    );
 
-    let deltaY = props.elementHeight
-        ? props.elementHeight
-        : ELEMENT_HEIGHT;
-    deltaY = deltaY += props.vSpacing
-        ? props.vSpacing
-        : VSPACING;
+    let deltaY = props.elementHeight ? props.elementHeight : ELEMENT_HEIGHT;
+    deltaY = deltaY += props.vSpacing ? props.vSpacing : VSPACING;
 
-    let deltaX = props.hSpacing
-        ? props.hSpacing / 2 
-        : HSPACING / 2;
-    deltaX = deltaX += props.elementWidth
-        ? props.elementWidth
-        : ELEMENT_WIDTH;
+    let deltaX = props.hSpacing ? props.hSpacing / 2 : HSPACING / 2;
+    deltaX = deltaX += props.elementWidth ? props.elementWidth : ELEMENT_WIDTH;
 
-    const xOffset = 20 + (props.elementWidth ? props.elementWidth : ELEMENT_WIDTH) / 2 + (width.current - (props.elementWidth ? props.elementWidth : ELEMENT_WIDTH)) / 2;
+    const xOffset =
+        20 +
+        (props.elementWidth ? props.elementWidth : ELEMENT_WIDTH) / 2 +
+        (width.current - (props.elementWidth ? props.elementWidth : ELEMENT_WIDTH)) / 2;
     const yOffset = 1.5 * (props.elementHeight ? props.elementHeight : ELEMENT_HEIGHT) + 20;
 
-    console.error(xOffset + ' ' + yOffset);
+    console.error(xOffset + " " + yOffset);
     const items: Item[] = [
         {
             id: "1",
@@ -66,7 +65,7 @@ export function preview(props: PertChartPreviewProps): ReactElement {
             self: "2",
             parent: "1",
             children: [],
-            item:  {} as ObjectItem,
+            item: {} as ObjectItem,
             level: 1,
             x: xOffset + deltaX,
             y: yOffset - deltaY,
@@ -80,7 +79,7 @@ export function preview(props: PertChartPreviewProps): ReactElement {
             self: "3",
             parent: "1",
             children: [],
-            item:  {} as ObjectItem,
+            item: {} as ObjectItem,
             level: 1,
             x: xOffset + deltaX,
             y: yOffset + deltaY,
@@ -98,27 +97,26 @@ export function preview(props: PertChartPreviewProps): ReactElement {
         elementHeight: props.elementHeight || ELEMENT_HEIGHT,
         horizontalSpacing: props.hSpacing || HSPACING,
         verticalSpacing: props.vSpacing || VSPACING,
-        horizontalSpacingFactor: HORIZONTAL_SPACING_FACTOR,
+        horizontalSpacingFactor: HORIZONTAL_SPACING_FACTOR
     };
 
     const lineLayout: LineLayout = {
         lineType: props.lineType || LINE_TYPE,
         bezierDelta: props.bezierDelta || BEZIER_DELTA,
         arrowWidth: props.arrowWidth || ARROW_WIDTH
-    }
+    };
     const beziers = createBeziers("pert", items, itemLayout, lineLayout);
 
     useEffect(() => {
         width.current = ref.current!.getBoundingClientRect().width;
     }, []);
-    
+
     return (
         <div
             ref={ref}
             className={classes.pert}
             style={{
                 height: props.height || HEIGHT
-                
             }}
         >
             <PertChart
@@ -127,9 +125,9 @@ export function preview(props: PertChartPreviewProps): ReactElement {
                 beziers={beziers}
                 width={width.current}
                 height={props.height || HEIGHT}
-                lineType={props.lineType} 
-                arrowWidth={props.arrowWidth || ARROW_WIDTH} 
-                elementHeight={props.elementHeight || ELEMENT_HEIGHT} 
+                lineType={props.lineType}
+                arrowWidth={props.arrowWidth || ARROW_WIDTH}
+                elementHeight={props.elementHeight || ELEMENT_HEIGHT}
                 elementWidth={props.elementWidth || ELEMENT_WIDTH}
             />
         </div>

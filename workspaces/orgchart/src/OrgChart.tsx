@@ -11,11 +11,7 @@ import { LineLayout } from "@treegraphwidgets/treegraphwidgetscore/src/models/Li
 const HORIZONTAL_SPACING_FACTOR = 3;
 
 export function OrgChart(props: OrgChartContainerProps): ReactElement {
-    if (
-        !props.dataMicroflow.items ||
-        !props.self ||
-        !props.boxContent
-    ) {
+    if (!props.dataMicroflow.items || !props.self || !props.boxContent) {
         return <div />;
     }
 
@@ -28,38 +24,34 @@ export function OrgChart(props: OrgChartContainerProps): ReactElement {
         elementHeight: props.elementHeight,
         horizontalSpacing: props.hSpacing,
         verticalSpacing: props.vSpacing,
-        horizontalSpacingFactor: HORIZONTAL_SPACING_FACTOR,
+        horizontalSpacingFactor: HORIZONTAL_SPACING_FACTOR
     };
 
     const lineLayout: LineLayout = {
         lineType: props.lineType,
         bezierDelta: props.bezierDelta,
         arrowWidth: props.arrowWidth
-    }
+    };
 
-    const { items, beziers, focusedItemProps } = useScreenElements(
-        {
-            widgetType: "organogram",
-            dataMicroflow: props.dataMicroflow,
-            self: props.self,
-            parent: props.parent,
-            hasFocus: props.hasFocus,
-            hasChildren: props.hasChildren,
-            showsChildren: props.showsChildren,
-            itemLayout,
-            lineLayout,
-            boxContent: props.boxContent,
-            dataMicroflowEdge: undefined,
-            parentEdge: undefined,
-            childEdge: undefined,
-            column: undefined
-        }
-    );
+    const { items, beziers, focusedItemProps } = useScreenElements({
+        widgetType: "organogram",
+        dataMicroflow: props.dataMicroflow,
+        self: props.self,
+        parent: props.parent,
+        hasFocus: props.hasFocus,
+        showsChildren: props.showsChildren,
+        itemLayout,
+        lineLayout,
+        boxContent: props.boxContent,
+        dataMicroflowEdge: undefined,
+        parentEdge: undefined,
+        childEdge: undefined,
+        column: undefined
+    });
 
     useEffect(() => {
         width.current = ref.current!.getBoundingClientRect().width;
     }, []);
-
 
     return (
         <div

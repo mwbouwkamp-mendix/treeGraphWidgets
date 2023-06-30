@@ -17,10 +17,7 @@ export interface PertChartContainerProps {
     height: number;
     dataMicroflow: ListValue;
     self: ListAttributeValue<string>;
-    parent?: ListAttributeValue<string>;
     hasFocus: ListAttributeValue<boolean>;
-    hasChildren?: ListAttributeValue<boolean>;
-    showsChildren?: ListAttributeValue<boolean>;
     elementWidth: number;
     elementHeight: number;
     hSpacing: number;
@@ -48,10 +45,7 @@ export interface PertChartPreviewProps {
     height: number | null;
     dataMicroflow: {} | { type: string } | null;
     self: string;
-    parent: string;
     hasFocus: string;
-    hasChildren: string;
-    showsChildren: string;
     elementWidth: number | null;
     elementHeight: number | null;
     hSpacing: number | null;

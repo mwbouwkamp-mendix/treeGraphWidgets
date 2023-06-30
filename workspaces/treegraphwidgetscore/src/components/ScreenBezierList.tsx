@@ -76,9 +76,7 @@ const ScreenBezierList = (props: ScreenBezierListProps): ReactElement => {
                         orient="auto"
                     >
                         <polygon
-                            points={`0 0, ${props.arrowWidth} ${props.arrowWidth / 3}, 0 ${
-                                (props.arrowWidth * 2) / 3
-                            }`}
+                            points={`0 0, ${props.arrowWidth} ${props.arrowWidth / 3}, 0 ${(props.arrowWidth * 2) / 3}`}
                             fill={lineColor}
                             strokeWidth={1}
                         />

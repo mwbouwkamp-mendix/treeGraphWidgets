@@ -33,10 +33,10 @@ const propsAreEqual = (prevProps: PertChartProps, newProps: PertChartProps): boo
 const PertChart = (props: PertChartProps): ReactElement => {
     return (
         <Fragment>
-            <ScreenItemList 
-                items={props.items} 
-                elementWidth={props.elementWidth} 
-                elementHeight={props.elementHeight} 
+            <ScreenItemList
+                items={props.items}
+                elementWidth={props.elementWidth}
+                elementHeight={props.elementHeight}
                 widgetType="pert"
             />
             <ScreenBezierList
@@ -44,7 +44,8 @@ const PertChart = (props: PertChartProps): ReactElement => {
                 width={props.width}
                 height={props.height}
                 lineType={props.lineType}
-                lineStyle={props.lineStyle} arrowWidth={props.arrowWidth}
+                lineStyle={props.lineStyle}
+                arrowWidth={props.arrowWidth}
             />
         </Fragment>
     );

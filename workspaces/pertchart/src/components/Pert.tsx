@@ -37,10 +37,10 @@ const Pert = (props: PertProps): ReactElement => {
                 lineType={props.lineType}
                 lineStyle={props.lineStyle}
                 width={props.width}
-                height={props.height} 
-                elementWidth={props.elementWidth} 
-                elementHeight={props.elementHeight} 
-                arrowWidth={props.arrowWidth}           
+                height={props.height}
+                elementWidth={props.elementWidth}
+                elementHeight={props.elementHeight}
+                arrowWidth={props.arrowWidth}
             />
         </PanZoomScrollArea>
     );

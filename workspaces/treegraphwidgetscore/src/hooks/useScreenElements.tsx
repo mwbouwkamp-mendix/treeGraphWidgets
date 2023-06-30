@@ -8,27 +8,26 @@ import { ListValue, ListAttributeValue, ListWidgetValue } from "mendix";
 import { ItemLayout } from "../models/ItemLayout";
 import { LineLayout } from "../models/LineLayout";
 
-const useScreenElements = (props:
-    {
-        widgetType: WidgetTypeEnum;
-        dataMicroflow: ListValue;
-        self: ListAttributeValue<string>;
-        parent?: ListAttributeValue<string>;
-        hasFocus: ListAttributeValue<boolean>;
-        hasChildren?: ListAttributeValue<boolean>;
-        showsChildren?: ListAttributeValue<boolean>;
-        itemLayout: ItemLayout;
-        lineLayout?: LineLayout;
-        boxContent: ListWidgetValue;
-        dataMicroflowEdge?: ListValue;
-        parentEdge?: ListAttributeValue<string>;
-        childEdge?: ListAttributeValue<string>;
-        column?: ListAttributeValue<Big>;
-    }): {
-        items: Item[];
-        beziers: Bezier[];
-        focusedItemProps: { x: number; y: number; isRoot: boolean };
-    } => {
+const useScreenElements = (props: {
+    widgetType: WidgetTypeEnum;
+    dataMicroflow: ListValue;
+    self: ListAttributeValue<string>;
+    parent?: ListAttributeValue<string>;
+    hasFocus: ListAttributeValue<boolean>;
+    hasChildren?: ListAttributeValue<boolean>;
+    showsChildren?: ListAttributeValue<boolean>;
+    itemLayout: ItemLayout;
+    lineLayout?: LineLayout;
+    boxContent: ListWidgetValue;
+    dataMicroflowEdge?: ListValue;
+    parentEdge?: ListAttributeValue<string>;
+    childEdge?: ListAttributeValue<string>;
+    column?: ListAttributeValue<Big>;
+}): {
+    items: Item[];
+    beziers: Bezier[];
+    focusedItemProps: { x: number; y: number; isRoot: boolean };
+} => {
     const [screenElements, setScreenElements] = useState<{
         items: Item[];
         beziers: Bezier[];
@@ -56,22 +55,15 @@ const useScreenElements = (props:
                 props.parentEdge,
                 props.childEdge,
                 props.showsChildren,
-                props.column,
-                props.hasChildren
-            )
-
-            const beziers = props.widgetType === "organogram" || props.widgetType === "pert"
-                ? createBeziers(
-                    props.widgetType,
-                    items,
-                    props.itemLayout,
-                    props.lineLayout!
-                )
-                : [];
-
-            const focusedItemProps = getFocussedItemProps(
-                items
+                props.column
             );
+
+            const beziers =
+                props.widgetType === "organogram" || props.widgetType === "pert"
+                    ? createBeziers(props.widgetType, items, props.itemLayout, props.lineLayout!)
+                    : [];
+
+            const focusedItemProps = getFocussedItemProps(items);
 
             setScreenElements(_prevSceenElements => ({
                 items,

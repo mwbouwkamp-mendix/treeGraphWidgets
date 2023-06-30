@@ -37,9 +37,9 @@ const Organogram = (props: OrganogramProps): ReactElement => {
                 beziers={props.beziers}
                 width={props.width}
                 height={props.height}
-                lineType={props.lineType} 
-                arrowWidth={props.arrowWidth} 
-                elementHeight={props.elementHeight} 
+                lineType={props.lineType}
+                arrowWidth={props.arrowWidth}
+                elementHeight={props.elementHeight}
                 elementWidth={props.elementWidth}
             />
         </PanZoomScrollArea>
