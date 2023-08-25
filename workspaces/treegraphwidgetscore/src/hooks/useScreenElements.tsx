@@ -41,7 +41,7 @@ const useScreenElements = (props: {
     useEffect(() => {
         if (
             props.dataMicroflow.items!.length > 0 &&
-            (props.widgetType !== "pert" || (props.dataMicroflowEdge && props.dataMicroflowEdge.items!.length > 0))
+            (props.widgetType !== "pert" || props.dataMicroflowEdge )
         ) {
             const items = createItems(
                 props.dataMicroflow,

@@ -457,6 +457,9 @@ const fixStrainInLevel = (levelItems: Item[], items: Item[]): void => {
             parents.length
         );
     }, 0);
+    if (!strain) {
+        return;
+    }
     levelItems.forEach(item => {
         item.y += strain / levelItems.length;
         return item;
@@ -493,7 +496,9 @@ const setYValuesPert = (items: Item[], itemLayout: ItemLayout): Item[] => {
         while (levelItems.length > 0) {
             const currentItem = levelItems.shift()!;
             const parents = getParentItems(currentItem, items);
-            currentItem.y = parents.map(parent => parent.y).reduce((a, b) => a + b, 0) / parents.length;
+            currentItem.y = parents.length > 0 
+                ? parents.map(parent => parent.y).reduce((a, b) => a + b, 0) / parents.length
+                : 0;
             if (currentY !== Number.MIN_VALUE && currentItem.y <= currentY) {
                 currentItem.y = currentY + itemLayout.elementHeight + itemLayout.verticalSpacing;
             }

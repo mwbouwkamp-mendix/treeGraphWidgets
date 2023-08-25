@@ -6,15 +6,17 @@
   "workspaces": [
     "workspaces/*"
   ],
-  "dependencies": {
-    "rollup-plugin-typescript2": "^0.34.1",
-    "typescript": "^4.9.5"
-  },
   "scripts": {
     "build": "cd ./workspaces/orgChart/ && npm run build && cd ../pertChart/ && npm run build && cd ../treeList/ && npm run build && cd .. & cd ..",
     "release": "cd ./workspaces/orgChart/ && npm run release && cd ../pertChart/ && npm run release && cd ../treeList/ && npm run release && cd .. & cd .."
   },
   "devDependencies": {
-    "prettier": "2.8.8"
+    "prettier": "2.8.8",
+    "rollup-plugin-typescript2": "^0.35.0",
+    "tslib": "^2.6.2",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "big.js": "^6.2.1"
   }
 }
