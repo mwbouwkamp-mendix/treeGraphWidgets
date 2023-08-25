@@ -1,7 +1,7 @@
 {
     "name": "pertchart",
     "widgetName": "PertChart",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Pert widget",
     "copyright": "© Mendix Technology BV 2022. All rights reserved.",
     "author": "Marco Bouwkamp",
