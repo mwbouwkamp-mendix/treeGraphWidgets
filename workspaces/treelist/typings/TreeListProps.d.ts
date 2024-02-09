@@ -3,7 +3,7 @@
  * WARNING: All changes made to this file will be overwritten
  * @author Mendix Widgets Framework Team
  */
-import { ComponentType, CSSProperties } from "react";
+import { ComponentType, CSSProperties, ReactNode } from "react";
 import { ListValue, ListAttributeValue, ListWidgetValue } from "mendix";
 
 export interface TreeListContainerProps {
@@ -31,11 +31,11 @@ export interface TreeListPreviewProps {
     styleObject?: CSSProperties;
     readOnly: boolean;
     height: number | null;
-    dataMicroflow: {} | { type: string } | null;
+    dataMicroflow: {} | { caption: string } | { type: string } | null;
     self: string;
     parent: string;
     hasFocus: string;
     showsChildren: string;
     indentation: number | null;
-    boxContent: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
+    boxContent: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
 }

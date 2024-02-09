@@ -2,6 +2,7 @@ import { createElement, ReactElement, useEffect, useRef } from "react";
 import usePanZoomScroll from "../hooks/usePanZoomScroll";
 
 import classes from "./PanZoomScrollArea.module.css";
+import { FocusedItem } from "../models/FocusedItem";
 
 export interface PanZoomScrollAreaProps {
     children: ReactElement | ReactElement[];
@@ -9,7 +10,7 @@ export interface PanZoomScrollAreaProps {
     height: number;
     elementWidth: number;
     elementHeight: number;
-    focusItemProps: { x: number; y: number; isRoot: boolean };
+    focusItemProps: FocusedItem;
     widgetType: string;
 }
 
