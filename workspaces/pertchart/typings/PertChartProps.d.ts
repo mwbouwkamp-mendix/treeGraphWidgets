@@ -3,7 +3,7 @@
  * WARNING: All changes made to this file will be overwritten
  * @author Mendix Widgets Framework Team
  */
-import { ComponentType, CSSProperties } from "react";
+import { ComponentType, CSSProperties, ReactNode } from "react";
 import { ListValue, ListAttributeValue, ListWidgetValue } from "mendix";
 import { Big } from "big.js";
 
@@ -43,7 +43,7 @@ export interface PertChartPreviewProps {
     styleObject?: CSSProperties;
     readOnly: boolean;
     height: number | null;
-    dataMicroflow: {} | { type: string } | null;
+    dataMicroflow: {} | { caption: string } | { type: string } | null;
     self: string;
     hasFocus: string;
     elementWidth: number | null;
@@ -54,8 +54,8 @@ export interface PertChartPreviewProps {
     arrowWidth: number | null;
     lineType: LineTypeEnum;
     lineStyle: string;
-    boxContent: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
-    dataMicroflowEdge: {} | { type: string } | null;
+    boxContent: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
+    dataMicroflowEdge: {} | { caption: string } | { type: string } | null;
     parentEdge: string;
     childEdge: string;
     column: string;
