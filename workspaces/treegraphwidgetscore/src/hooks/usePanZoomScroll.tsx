@@ -23,7 +23,7 @@ const usePanZoomScroll = (
     onMouseDoubleClick: (event: MouseEvent) => void;
 } => {
     const [zoom, setZoom] = useState(DEFAULT_ZOOM);
-    const [origin, setOrigin] = useState({ x: focusItemProps.x, y: focusItemProps.y });
+    const [origin, setOrigin] = useState({ x: -1, y: -1 });
 
     const adjustOrigin = useCallback(
         (x: number, y: number): void => {

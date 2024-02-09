@@ -332,13 +332,16 @@ const setXValuesTree = (items: Item[], itemLayout: ItemLayout): Item[] => {
 
 export const getFocussedItemProps = (items: Item[]): FocusedItem => {
     const focusedItem = getFocussedItem(items);
+
+    if (focusedItem !== undefined) 
+        return { id: focusedItem.id, x: focusedItem.x, y: focusedItem.y, isRoot: focusedItem.isRoot };
+
     const rootItem = getRootItem(items)[0];
 
-    return focusedItem
-        ? { id: focusedItem.id, x: focusedItem.x, y: focusedItem.y, isRoot: focusedItem.isRoot }
-        : rootItem
-        ? { id: rootItem.id, x: rootItem.x, y: rootItem.y, isRoot: rootItem.isRoot }
-        : { id: "", x: 0, y: 0, isRoot: false };
+    if (rootItem !== undefined)
+        return { id: rootItem.id, x: rootItem.x, y: rootItem.y, isRoot: rootItem.isRoot };
+    
+    return { id: "", x: 0, y: 0, isRoot: false };
 };
 
 /**
