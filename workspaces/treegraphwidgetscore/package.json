@@ -2,7 +2,7 @@
     "name": "@treegraphwidgets/treegraphwidgetscore",
     "main": "./src/treegraphwidgetscore.tsx",
     "widgetName": "TreeGraphWidgetsCore",
-    "version": "1.1.0",
+    "version": "1.1.2",
     "description": "Core of the TreeGraphWidgets",
     "copyright": "© Mendix Technology BV 2022. All rights reserved.",
     "author": "Marco Bouwkamp",
@@ -28,24 +28,25 @@
     "devDependencies": {
         "@mendix/pluggable-widgets-tools": "^9.18.0",
         "@types/big.js": "^6.0.2"
-      },
-      "dependencies": {
+    },
+    "dependencies": {
         "classnames": "^2.2.6",
         "@treegraphwidgets/treegraphwidgetscore": "*"
-      },
-      "overrides": {
+    },
+    "overrides": {
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-native": "^0.70.7",
         "@types/react": "^18.2.0",
         "@types/react-dom": "^18.2.0",
         "@types/react-native": "^0.70.0"
-      },
-      "resolutions": {
+    },
+    "resolutions": {
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-native": "^0.70.7",
         "@types/react": "^18.2.0",
         "@types/react-dom": "^18.2.0",
         "@types/react-native": "^0.70.0"
-      }}
+    }
+}

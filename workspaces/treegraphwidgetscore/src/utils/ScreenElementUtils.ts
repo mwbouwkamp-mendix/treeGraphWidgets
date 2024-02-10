@@ -50,4 +50,3 @@ export const createBeziers = (
 
     return generateBeziers(items, itemLayout, lineLayout, widgetType);
 };
-
