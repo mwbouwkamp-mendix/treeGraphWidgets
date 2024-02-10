@@ -31,6 +31,9 @@ export function preview(props: OrgChartPreviewProps): ReactElement {
         <div>empty</div>
     );
 
+    // console.error(props.boxContent.renderer);
+    
+    // const previewContent = <div />;
     let deltaY = props.elementHeight ? props.elementHeight : ELEMENT_HEIGHT;
     deltaY = deltaY += props.vSpacing ? props.vSpacing : VSPACING;
 

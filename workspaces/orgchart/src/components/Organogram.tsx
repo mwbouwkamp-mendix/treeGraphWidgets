@@ -3,6 +3,7 @@ import { Bezier } from "@treegraphwidgets/treegraphwidgetscore/src/models/Bezier
 import { Item } from "@treegraphwidgets/treegraphwidgetscore/src/models/Item";
 import OrganogramChart from "./OrganogramChart";
 import PanZoomScrollArea from "@treegraphwidgets/treegraphwidgetscore/src/components/PanZoomScrollArea";
+import { FocusedItem } from "@treegraphwidgets/treegraphwidgetscore/src/models/FocusedItem";
 
 export interface OrganogramProps {
     width: number;
@@ -10,7 +11,7 @@ export interface OrganogramProps {
     elementWidth: number;
     elementHeight: number;
     arrowWidth: number;
-    focusedItemProps: { x: number; y: number; isRoot: boolean };
+    focusedItemProps: FocusedItem;
     items: Item[];
     beziers: Bezier[];
     lineStyle: string;
@@ -24,11 +25,13 @@ const Organogram = (props: OrganogramProps): ReactElement => {
             height={props.height}
             elementWidth={props.elementWidth}
             elementHeight={props.elementHeight}
-            focusItemProps={{
-                x: props.focusedItemProps.x,
-                y: props.focusedItemProps.y,
-                isRoot: props.focusedItemProps.isRoot
-            }}
+            // focusItemProps={{
+            //     id: props.focusedItemProps.id,
+            //     x: props.focusedItemProps.x,
+            //     y: props.focusedItemProps.y,
+            //     isRoot: props.focusedItemProps.isRoot
+            // }}
+            focusItemProps={props.focusedItemProps}
             widgetType="organogram"
         >
             <OrganogramChart

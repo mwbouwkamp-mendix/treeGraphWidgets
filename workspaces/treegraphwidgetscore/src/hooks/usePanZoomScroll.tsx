@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState, MouseEvent } from "react";
+import { FocusedItem } from "../models/FocusedItem";
 
 let mouseClick: MouseEvent | undefined;
 
@@ -9,7 +10,7 @@ const usePanZoomScroll = (
     height: number,
     elementWidth: number,
     elementHeight: number,
-    focusItemProps: { x: number; y: number; isRoot: boolean },
+    focusItemProps: FocusedItem,
     widgetType: string
 ): {
     zoom: number;
@@ -22,7 +23,7 @@ const usePanZoomScroll = (
     onMouseDoubleClick: (event: MouseEvent) => void;
 } => {
     const [zoom, setZoom] = useState(DEFAULT_ZOOM);
-    const [origin, setOrigin] = useState({ x: 0, y: 0 });
+    const [origin, setOrigin] = useState({ x: -1, y: -1 });
 
     const adjustOrigin = useCallback(
         (x: number, y: number): void => {
@@ -42,15 +43,14 @@ const usePanZoomScroll = (
         } else {
             adjustOrigin(focusItemProps.x, focusItemProps.y);
         }
-        setZoom(100);
+        // setZoom(100);
     }, [adjustOrigin, focusItemProps.isRoot, focusItemProps.x, focusItemProps.y, height, widgetType]);
 
     useEffect(() => {
         if (focusItemProps.x !== origin.x || focusItemProps.y !== origin.y) {
             resetView();
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [resetView, focusItemProps.isRoot, focusItemProps.x, focusItemProps.y, height]);
+    }, [resetView, focusItemProps.x, focusItemProps.y]);
 
     const moveOrigin = (delta: { x: number; y: number }): void => {
         setOrigin(prevOrigin => {

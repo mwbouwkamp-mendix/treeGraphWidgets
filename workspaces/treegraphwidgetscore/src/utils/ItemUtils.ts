@@ -2,6 +2,7 @@ import { ItemLayout } from "../models/ItemLayout";
 import { ListAttributeValue, ObjectItem, ListWidgetValue } from "mendix";
 import { Item } from "../models/Item";
 import { Edge } from "../models/Edge";
+import { FocusedItem } from "../models/FocusedItem";
 
 /**
  * Creates an array of Items based on the input provided by the widget (through props)
@@ -33,7 +34,8 @@ const createItems = (
         const column =
             widgetType === "pert" ? (columnAttribute ? parseInt(columnAttribute.get(item).displayValue, 10) : 0) : 0;
         return {
-            id: selfAttribute.get(item).displayValue + Math.round(Math.random() * 1000000),
+            id: selfAttribute.get(item).displayValue,
+            // id: selfAttribute.get(item).displayValue + Math.round(Math.random() * 1000000),
             widgetContent: boxContent.get(item),
             self: selfAttribute.get(item).displayValue,
             parent,
@@ -46,7 +48,7 @@ const createItems = (
             hasFocus: hasFocusAttribute.get(item).displayValue === "Yes",
             showsChildren
         };
-    });
+    }) as Item[];
 };
 
 const createEdges = (
@@ -328,6 +330,20 @@ const setXValuesTree = (items: Item[], itemLayout: ItemLayout): Item[] => {
     });
 };
 
+export const getFocussedItemProps = (items: Item[]): FocusedItem => {
+    const focusedItem = getFocussedItem(items);
+
+    if (focusedItem !== undefined) 
+        return { id: focusedItem.id, x: focusedItem.x, y: focusedItem.y, isRoot: focusedItem.isRoot };
+
+    const rootItem = getRootItem(items)[0];
+
+    if (rootItem !== undefined)
+        return { id: rootItem.id, x: rootItem.x, y: rootItem.y, isRoot: rootItem.isRoot };
+    
+    return { id: "", x: 0, y: 0, isRoot: false };
+};
+
 /**
  * Sets x for all Items based on their position in the organogram
  *
@@ -335,17 +351,29 @@ const setXValuesTree = (items: Item[], itemLayout: ItemLayout): Item[] => {
  * @param dimensions Dimensions with information about element width, height and horizontal and vertical spacing
  * @returns Item[], the updated items
  */
-const setXValuesOrganogram = (items: Item[], itemLayout: ItemLayout): Item[] => {
+const setXValuesOrganogram = (currentItems: Item[], items: Item[], itemLayout: ItemLayout): Item[] => {
     const depth = Math.max(...items.map(item => item.level));
 
     const levels = [...Array(depth + 1).keys()].map(i => [...items].filter(item => item.level === i)).reverse();
 
-    return levels.flatMap((level, levelIndex) => {
+    const itemsWithXValues = levels.flatMap((level, levelIndex) => {
         if (levelIndex === 0) {
             return setXValuesBottom(level, items, itemLayout);
         }
-        return setXValuesNonBottom(level);
+        return setXValuesNonBottom(level); 
     });
+
+    const focusedItemProps = getFocussedItemProps(currentItems);
+
+    const currentFocus = currentItems.find(item => item.id === focusedItemProps.id);
+    const itemsFocus = items.find(item => item.id === focusedItemProps.id);
+
+    if (currentFocus && itemsFocus) {
+        const deltaX = currentFocus.x - itemsFocus.x;
+        itemsWithXValues.forEach(item => item.x += deltaX);
+    }
+    
+    return itemsWithXValues;
 };
 
 /**
@@ -370,12 +398,12 @@ const setXValuesPert = (items: Item[], itemLayout: ItemLayout): Item[] => {
  * @param widgetType String representation of the type of widget
  * @returns Item[], the updated items
  */
-const setXValues = (items: Item[], itemLayout: ItemLayout, widgetType: string): Item[] => {
+const setXValues = (currentItems: Item[], items: Item[], itemLayout: ItemLayout, widgetType: string): Item[] => {
     switch (widgetType) {
         case "tree":
             return setXValuesTree(items, itemLayout);
         case "organogram":
-            return setXValuesOrganogram(items, itemLayout);
+            return setXValuesOrganogram(currentItems, items, itemLayout);
         case "pert":
             return setXValuesPert(items, itemLayout);
         default:
@@ -685,6 +713,7 @@ const sortTree = (items: Item[]): Item[] => {
  * @returns { items: [Item], lines: [Line] } with the Items and Lines
  */
 export const generateItems = (
+    currentItems: Item[],
     objectItems: ObjectItem[],
     selfAttribute: ListAttributeValue,
     hasFocusAttribute: ListAttributeValue,
@@ -723,7 +752,7 @@ export const generateItems = (
         //     setHasChildren(items, hasChildren);
     }
 
-    items = setXValues(items, itemLayout, widgetType);
+    items = setXValues(currentItems, items, itemLayout, widgetType);
     items = removeDummyItems(items);
     if (widgetType === "organogram" || widgetType === "pert") {
         items = setYValues(items, itemLayout, widgetType);

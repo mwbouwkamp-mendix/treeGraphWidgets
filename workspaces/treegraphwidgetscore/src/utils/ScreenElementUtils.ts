@@ -1,13 +1,13 @@
-import { generateItems, getFocussedItem, getRootItem } from "./ItemUtils";
+import { generateItems } from "./ItemUtils";
 import { generateBeziers } from "./BezierUtils";
 import { Item } from "../models/Item";
 import { ListValue, ListAttributeValue, ListWidgetValue } from "mendix";
 import { WidgetTypeEnum } from "@treegraphwidgets/treegraphwidgetscore/typings/TreeGraphWidgetsCoreProps";
-import Big from "big.js";
 import { ItemLayout } from "../models/ItemLayout";
 import { LineLayout } from "../models/LineLayout";
 
 export const createItems = (
+    currentItems: Item[],
     dataMicroflow: ListValue,
     self: ListAttributeValue<string>,
     hasFocus: ListAttributeValue<boolean>,
@@ -22,6 +22,7 @@ export const createItems = (
     column?: ListAttributeValue<Big>
 ): Item[] => {
     return generateItems(
+        currentItems,
         dataMicroflow.items!,
         self,
         hasFocus,
@@ -50,13 +51,3 @@ export const createBeziers = (
     return generateBeziers(items, itemLayout, lineLayout, widgetType);
 };
 
-export const getFocussedItemProps = (items: Item[]) => {
-    const focusedItem = getFocussedItem(items);
-    const rootItem = getRootItem(items)[0];
-
-    return focusedItem
-        ? { x: focusedItem.x, y: focusedItem.y, isRoot: focusedItem.isRoot }
-        : rootItem
-        ? { x: rootItem.x, y: rootItem.y, isRoot: rootItem.isRoot }
-        : { x: 0, y: 0, isRoot: false };
-};
