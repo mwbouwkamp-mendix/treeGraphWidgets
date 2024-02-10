@@ -50,8 +50,9 @@ export function OrgChart(props: OrgChartContainerProps): ReactElement {
     });
 
     useEffect(() => {
-        if (!ref.current)
+        if (!ref.current) {
             return;
+        }
 
         width.current = ref.current.getBoundingClientRect().width;
     }, [ref]);

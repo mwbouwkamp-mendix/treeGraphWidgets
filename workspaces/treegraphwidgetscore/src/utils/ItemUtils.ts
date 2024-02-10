@@ -333,14 +333,13 @@ const setXValuesTree = (items: Item[], itemLayout: ItemLayout): Item[] => {
 export const getFocussedItemProps = (items: Item[]): FocusedItem => {
     const focusedItem = getFocussedItem(items);
 
-    if (focusedItem !== undefined) 
+    if (focusedItem !== undefined)
         return { id: focusedItem.id, x: focusedItem.x, y: focusedItem.y, isRoot: focusedItem.isRoot };
 
     const rootItem = getRootItem(items)[0];
 
-    if (rootItem !== undefined)
-        return { id: rootItem.id, x: rootItem.x, y: rootItem.y, isRoot: rootItem.isRoot };
-    
+    if (rootItem !== undefined) return { id: rootItem.id, x: rootItem.x, y: rootItem.y, isRoot: rootItem.isRoot };
+
     return { id: "", x: 0, y: 0, isRoot: false };
 };
 
@@ -360,7 +359,7 @@ const setXValuesOrganogram = (currentItems: Item[], items: Item[], itemLayout: I
         if (levelIndex === 0) {
             return setXValuesBottom(level, items, itemLayout);
         }
-        return setXValuesNonBottom(level); 
+        return setXValuesNonBottom(level);
     });
 
     const focusedItemProps = getFocussedItemProps(currentItems);
@@ -370,9 +369,9 @@ const setXValuesOrganogram = (currentItems: Item[], items: Item[], itemLayout: I
 
     if (currentFocus && itemsFocus) {
         const deltaX = currentFocus.x - itemsFocus.x;
-        itemsWithXValues.forEach(item => item.x += deltaX);
+        itemsWithXValues.forEach(item => (item.x += deltaX));
     }
-    
+
     return itemsWithXValues;
 };
 
@@ -524,9 +523,8 @@ const setYValuesPert = (items: Item[], itemLayout: ItemLayout): Item[] => {
         while (levelItems.length > 0) {
             const currentItem = levelItems.shift()!;
             const parents = getParentItems(currentItem, items);
-            currentItem.y = parents.length > 0 
-                ? parents.map(parent => parent.y).reduce((a, b) => a + b, 0) / parents.length
-                : 0;
+            currentItem.y =
+                parents.length > 0 ? parents.map(parent => parent.y).reduce((a, b) => a + b, 0) / parents.length : 0;
             if (currentY !== Number.MIN_VALUE && currentItem.y <= currentY) {
                 currentItem.y = currentY + itemLayout.elementHeight + itemLayout.verticalSpacing;
             }

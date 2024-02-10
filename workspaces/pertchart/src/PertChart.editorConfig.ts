@@ -101,7 +101,7 @@ export type PreviewProps =
 
 export function getProperties(
     _values: PertChartPreviewProps,
-    defaultProperties: Properties /*, target: Platform*/
+    defaultProperties: Properties /* , target: Platform*/
 ): Properties {
     // Do the values manipulation here to control the visibility of properties in Studio and Studio Pro conditionally.
     /* Example

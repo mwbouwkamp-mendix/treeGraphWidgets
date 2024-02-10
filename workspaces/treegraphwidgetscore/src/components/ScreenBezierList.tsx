@@ -65,7 +65,7 @@ const ScreenBezierList = (props: ScreenBezierListProps): ReactElement => {
 
     return (
         <div style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
-            <svg width={svgDimensions.x} height={svgDimensions.y} style={{overflow: "visible"}}>
+            <svg width={svgDimensions.x} height={svgDimensions.y} style={{ overflow: "visible" }}>
                 <defs>
                     <marker
                         id="arrowhead"
