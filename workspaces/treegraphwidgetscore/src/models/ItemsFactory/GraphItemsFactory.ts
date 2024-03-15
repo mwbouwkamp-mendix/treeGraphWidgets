@@ -10,7 +10,6 @@ export default abstract class GraphItemsFactory extends ItemsFactory {
         selfAttribute: ListAttributeValue,
         hasFocusAttribute: ListAttributeValue,
         boxContent: ListWidgetValue,
-        widgetType: string,
         parentAttribute?: ListAttributeValue,
         showsChildrenAttribute?: ListAttributeValue,
         columnAttribute?: ListAttributeValue,
@@ -23,7 +22,6 @@ export default abstract class GraphItemsFactory extends ItemsFactory {
             selfAttribute,
             hasFocusAttribute,
             boxContent,
-            widgetType,
             parentAttribute,
             showsChildrenAttribute,
             columnAttribute);
@@ -33,6 +31,35 @@ export default abstract class GraphItemsFactory extends ItemsFactory {
     abstract override setXValues(currentItems: Item[], itemLayout: ItemLayout, widgetType: string): Item[];
     abstract override setYValues(itemLayout: ItemLayout, widgetType: string): Item[];
     abstract override sortItems(): Item[];
+
+    override createItems(
+        items: ObjectItem[],
+        selfAttribute: ListAttributeValue,
+        columnAttribute: ListAttributeValue | undefined,
+        hasFocusAttribute: ListAttributeValue,
+        boxContent: ListWidgetValue,
+    ): Item[] {
+        if (!items) {
+            throw Error("No items found");
+        }
+        return items.map(item => {
+            return {
+                id: selfAttribute.get(item).displayValue,
+                // id: selfAttribute.get(item).displayValue + Math.round(Math.random() * 1000000),
+                widgetContent: boxContent.get(item),
+                self: selfAttribute.get(item).displayValue,
+                parent: undefined,
+                children: null,
+                item,
+                level: columnAttribute ? parseInt(columnAttribute.get(item).displayValue, 10) : 0,
+                y: 0,
+                x: 0,
+                isRoot: !parent,
+                hasFocus: hasFocusAttribute.get(item).displayValue === "Yes",
+                showsChildren: undefined
+            };
+        }) as Item[];
+    }
 
     createEdges(
         edgeObjectItems: ObjectItem[] | undefined,

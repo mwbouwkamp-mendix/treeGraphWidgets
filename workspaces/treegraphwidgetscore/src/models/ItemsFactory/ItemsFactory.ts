@@ -13,7 +13,6 @@ export default abstract class ItemsFactory {
         selfAttribute: ListAttributeValue,
         hasFocusAttribute: ListAttributeValue,
         boxContent: ListWidgetValue,
-        widgetType: string,
         parentAttribute?: ListAttributeValue,
         showsChildrenAttribute?: ListAttributeValue,
         columnAttribute?: ListAttributeValue,
@@ -26,7 +25,6 @@ export default abstract class ItemsFactory {
                 columnAttribute,
                 hasFocusAttribute,
                 boxContent,
-                widgetType,
                 parentAttribute,
                 showsChildrenAttribute
             );
@@ -55,43 +53,15 @@ export default abstract class ItemsFactory {
         return this.items;
     }
 
-    createItems(
+    abstract createItems(
         items: ObjectItem[],
         selfAttribute: ListAttributeValue,
         columnAttribute: ListAttributeValue | undefined,
         hasFocusAttribute: ListAttributeValue,
         boxContent: ListWidgetValue,
-        widgetType: string,
         parentAttribute?: ListAttributeValue,
         showsChildrenAttribute?: ListAttributeValue
-    ): Item[] {
-        if (!items) {
-            throw Error("No items found");
-        }
-        return items.map(item => {
-            const parent = widgetType === "pert" ? undefined : parentAttribute?.get(item).displayValue || undefined;
-            const showsChildren =
-                widgetType === "pert" ? undefined : showsChildrenAttribute?.get(item).displayValue === "Yes" || undefined;
-
-            const column =
-                widgetType === "pert" ? (columnAttribute ? parseInt(columnAttribute.get(item).displayValue, 10) : 0) : 0;
-            return {
-                id: selfAttribute.get(item).displayValue,
-                // id: selfAttribute.get(item).displayValue + Math.round(Math.random() * 1000000),
-                widgetContent: boxContent.get(item),
-                self: selfAttribute.get(item).displayValue,
-                parent,
-                children: null,
-                item,
-                level: column,
-                y: 0,
-                x: 0,
-                isRoot: !parent,
-                hasFocus: hasFocusAttribute.get(item).displayValue === "Yes",
-                showsChildren
-            };
-        }) as Item[];
-    }
+    ): Item[];
 
     abstract setChildren(
         widgetType: string,

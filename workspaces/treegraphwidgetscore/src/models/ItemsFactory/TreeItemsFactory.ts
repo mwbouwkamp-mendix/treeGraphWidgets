@@ -2,11 +2,45 @@ import { getRootItem } from "../../utils/ItemUtils";
 import { Item } from "../Item";
 import { ItemLayout } from "../ItemLayout";
 import ItemsFactory from "./ItemsFactory";
+import { ObjectItem, ListAttributeValue, ListWidgetValue } from "mendix";
 
 export default abstract class TreeItemsFactory extends ItemsFactory {
     abstract override setXValues(currentItems: Item[], itemLayout: ItemLayout, widgetType: string): Item[];
     abstract override setYValues(itemLayout: ItemLayout, widgetType: string): Item[];
     abstract override sortItems(): Item[];
+
+    override createItems(
+        items: ObjectItem[],
+        selfAttribute: ListAttributeValue,
+        _columnAttribute: ListAttributeValue | undefined,
+        hasFocusAttribute: ListAttributeValue,
+        boxContent: ListWidgetValue,
+        parentAttribute?: ListAttributeValue,
+        showsChildrenAttribute?: ListAttributeValue
+    ): Item[] {
+        if (!items) {
+            throw Error("No items found");
+        }
+        return items.map(item => {
+            const parent = parentAttribute?.get(item).displayValue || undefined;
+
+            return {
+                id: selfAttribute.get(item).displayValue,
+                // id: selfAttribute.get(item).displayValue + Math.round(Math.random() * 1000000),
+                widgetContent: boxContent.get(item),
+                self: selfAttribute.get(item).displayValue,
+                parent,
+                children: null,
+                item,
+                level: 0,
+                y: 0,
+                x: 0,
+                isRoot: !parent,
+                hasFocus: hasFocusAttribute.get(item).displayValue === "Yes",
+                showsChildren: showsChildrenAttribute?.get(item).displayValue === "Yes" || undefined
+            };
+        }) as Item[];
+    }
 
     /**
      * Sets the children array for Items based on the parent definition.

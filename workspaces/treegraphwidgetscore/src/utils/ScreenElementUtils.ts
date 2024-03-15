@@ -33,7 +33,6 @@ export const createItems = (
                 self,
                 hasFocus,
                 boxContent!,
-                widgetType,
                 parent,
                 showsChildren,
                 column
@@ -45,7 +44,6 @@ export const createItems = (
                 self,
                 hasFocus,
                 boxContent!,
-                widgetType,
                 parent,
                 showsChildren,
                 column,
@@ -60,7 +58,6 @@ export const createItems = (
                 self,
                 hasFocus,
                 boxContent!,
-                widgetType,
                 parent,
                 showsChildren,
                 column
