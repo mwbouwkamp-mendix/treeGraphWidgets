@@ -37,7 +37,7 @@ export const createItems = (
                 parent,
                 showsChildren,
                 column
-                );
+            );
             break;
         case "pert":
             itemsFactory = new PertChartItemsFactory(
@@ -48,7 +48,10 @@ export const createItems = (
                 widgetType,
                 parent,
                 showsChildren,
-                column
+                column,
+                dataMicroflowEdge?.items,
+                parentEdge,
+                childEdge
             );
             break;
         case "tree":
@@ -70,10 +73,7 @@ export const createItems = (
     return itemsFactory.execute(
         currentItems,
         dimensions,
-        widgetType,
-        dataMicroflowEdge?.items,
-        parentEdge,
-        childEdge
+        widgetType
     );
 
 

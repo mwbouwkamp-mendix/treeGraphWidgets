@@ -1,13 +1,11 @@
-import ItemsFactory from "./ItemsFactory";
-import { Edge } from "../Edge";
 import { Item } from "../Item";
 import { getFocussedItemProps } from "../../utils/ItemUtils";
 import { ItemLayout } from "../ItemLayout";
+import TreeItemsFactory from "./TreeItemsFactory";
 
 
-export default class OrgChartItemsFactory extends ItemsFactory {
+export default class OrgChartItemsFactory extends TreeItemsFactory {
     override setChildren(
-        _edges: Edge[],
         widgetType: string
     ): Item[] {
         return this.setChildrenTree(widgetType);

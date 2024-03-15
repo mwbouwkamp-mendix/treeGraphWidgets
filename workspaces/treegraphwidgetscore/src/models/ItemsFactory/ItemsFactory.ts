@@ -6,6 +6,7 @@ import { Edge } from "../../models/Edge";
 
 export default abstract class ItemsFactory {
     items: Item[];
+    edges: Edge[];
 
     constructor(
         objectItems: ObjectItem[],
@@ -29,22 +30,16 @@ export default abstract class ItemsFactory {
                 parentAttribute,
                 showsChildrenAttribute
             );
+        this.edges = [];
     }
 
     execute(
         currentItems: Item[],
         itemLayout: ItemLayout,
         widgetType: string,
-        edgeObjectItems?: ObjectItem[],
-        edgeParent?: ListAttributeValue,
-        edgeChild?: ListAttributeValue,
         hasChildren?: ListAttributeValue
     ): Item[] {
-
-
-        const edges = this.createEdges(edgeObjectItems, edgeParent, edgeChild);
-
-        this.items = this.setChildren(edges, widgetType);
+        this.items = this.setChildren(widgetType, this.edges);
 
         if (hasChildren) {
             // Not yet supported by Mendix: Widget [WIDGET] is attempting to call "setValue". This operation is not yet supported on attributes linked to a datasource.
@@ -98,28 +93,9 @@ export default abstract class ItemsFactory {
         }) as Item[];
     }
 
-    createEdges(
-        edgeObjectItems: ObjectItem[] | undefined,
-        parentAtrribute: ListAttributeValue | undefined,
-        childAtrribute: ListAttributeValue | undefined
-    ): Edge[] {
-        if (!edgeObjectItems || !parentAtrribute || !childAtrribute) {
-            return [];
-        }
-
-        return edgeObjectItems
-            .map(edge => {
-                return {
-                    parent: parentAtrribute.get(edge).displayValue,
-                    child: childAtrribute.get(edge).displayValue
-                };
-            })
-            .filter(edge => !!edge.child && !!edge.parent);
-    }
-
     abstract setChildren(
-        edges: Edge[],
-        widgetType: string
+        widgetType: string,
+        edges?: Edge[]
     ): Item[];
 
     abstract setXValues(

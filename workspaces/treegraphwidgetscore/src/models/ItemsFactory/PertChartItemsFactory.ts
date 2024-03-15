@@ -1,13 +1,13 @@
-import ItemsFactory from "./ItemsFactory";
 import { Edge } from "../Edge";
 import { Item } from "../Item";
 import { ItemLayout } from "../ItemLayout";
 import { getParentItems } from "../../utils/ItemUtils";
+import GraphItemsFactory from "./GraphItemsFactory";
 
-export default class OrgChartItemsFactory extends ItemsFactory {
+export default class PertChartItemsFactory extends GraphItemsFactory {
     override setChildren(
-        edges: Edge[],
-        _widgetType: string
+        _widgetType: string,
+        edges: Edge[]
     ): Item[] {
         return this.setChildrenGraph(edges);
     }

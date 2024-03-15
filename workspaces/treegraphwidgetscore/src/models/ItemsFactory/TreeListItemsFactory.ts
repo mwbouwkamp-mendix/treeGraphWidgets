@@ -1,12 +1,10 @@
-import ItemsFactory from "./ItemsFactory";
-import { Edge } from "../Edge";
+import TreeItemsFactory from "./TreeItemsFactory";
 import { Item } from "../Item";
 import { ItemLayout } from "../ItemLayout";
 import { getRootItem } from "../../utils/ItemUtils";
 
-export default class TreeListItemsFactory extends ItemsFactory {
+export default class TreeListItemsFactory extends TreeItemsFactory {
     override setChildren(
-        _edges: Edge[],
         widgetType: string
     ): Item[] {
         return this.setChildrenTree(widgetType);
