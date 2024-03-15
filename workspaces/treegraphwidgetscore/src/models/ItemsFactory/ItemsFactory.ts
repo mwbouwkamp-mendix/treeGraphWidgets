@@ -34,19 +34,19 @@ export default abstract class ItemsFactory {
     execute(
         currentItems: Item[],
         itemLayout: ItemLayout,
-        widgetType: string,
-        hasChildren?: ListAttributeValue
+        widgetType: string
+        // hasChildren?: ListAttributeValue
     ): Item[] {
-        this.items = this.setChildren(widgetType, this.edges);
+        this.items = this.setChildren(widgetType);
 
-        if (hasChildren) {
+        // if (hasChildren) {
             // Not yet supported by Mendix: Widget [WIDGET] is attempting to call "setValue". This operation is not yet supported on attributes linked to a datasource.
             //     setHasChildren(items, hasChildren);
-        }
+        // }
 
-        this.items = this.setXValues(currentItems, itemLayout, widgetType);
+        this.items = this.setXValues(currentItems, itemLayout);
         this.items = this.removeDummyItems();
-        this.items = this.setYValues(itemLayout, widgetType);
+        this.items = this.setYValues(itemLayout);
 
         this.items = this.sortItems();
 
@@ -65,26 +65,26 @@ export default abstract class ItemsFactory {
 
     abstract setChildren(
         widgetType: string,
-        edges?: Edge[]
     ): Item[];
 
     abstract setXValues(
         currentItems: Item[],
         itemLayout: ItemLayout,
-        widgetType: string
     ): Item[];
 
     abstract setYValues(
-        itemLayout: ItemLayout,
-        widgetType: string
+        itemLayout: ItemLayout
     ): Item[];
 
     abstract sortItems(): Item[];
 
     removeDummyItems(): Item[] {
         const dummies = this.items.filter(item => !item.item);
-        this.items.filter(item => item.children && dummies.includes(item.children[0])).forEach(item => (item.children = []));
-        return this.items.filter(item => !!item.item);
+        this.items
+            .filter(item => item.children && dummies.includes(item.children[0]))
+            .forEach(item => (item.children = []));
+        return this.items
+            .filter(item => !!item.item);
     };
 
     /**
@@ -104,23 +104,22 @@ export default abstract class ItemsFactory {
      * If no children can be found in the array of Items provided, a single dummy Item is added as a child Item. This is required later on,
      * when the x-position of the Items is set. For this, the lowest level of the breakdown structure needs to have an Item for each branch
      *
-     * @param parent the parent Item to which childrend need to be added
-     * @param items Item[] containing potential childeren
+     * @param item the parent Item to which childrend need to be added
      * @returns Item[] of the child Items for the parent Item
      */
-    addChildren(parent: Item): Item[] {
-        let children = this.items.filter(item => item.parent === parent.self);
+    addChildren(item: Item): Item[] {
+        let children = this.items.filter(item => item.parent === item.self);
 
         // In case there are no children, a dummy child needs to be added for creating the correct horizontal spacing of the items
-        if (children.length === 0 || !parent.showsChildren) {
+        if (children.length === 0 || !item.showsChildren) {
             const dummy: Item = {
                 id: Math.round(Math.random() * 1000000).toString(),
                 widgetContent: null,
                 self: Math.round(Math.random() * 1000000).toString(),
-                parent: parent.self,
+                parent: item.self,
                 children: null,
                 item: null,
-                level: parent.level,
+                level: item.level,
                 y: 0,
                 x: 0,
                 isRoot: false,
@@ -131,10 +130,10 @@ export default abstract class ItemsFactory {
         }
 
         children = children.map(child => {
-            return { ...child, level: parent.level + 1 };
+            return { ...child, level: item.level + 1 };
         });
 
-        parent.children = children;
+        item.children = children;
 
         return children;
     };

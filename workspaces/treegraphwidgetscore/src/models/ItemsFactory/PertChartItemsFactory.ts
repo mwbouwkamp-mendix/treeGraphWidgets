@@ -15,7 +15,6 @@ export default class PertChartItemsFactory extends GraphItemsFactory {
     override setXValues(
         _currentItems: Item[],
         itemLayout: ItemLayout,
-        _widgetType: string
     ): Item[] {
         return this.items.map(item => {
             item.x = item.level * (itemLayout.elementWidth + itemLayout.horizontalSpacing);
@@ -30,8 +29,7 @@ export default class PertChartItemsFactory extends GraphItemsFactory {
      * @returns Item[], the updated items
      */
     override setYValues(
-        itemLayout: ItemLayout,
-        _widgetType: string
+        itemLayout: ItemLayout
     ): Item[] {
         // const itemsByLevel = items.sort((a, b) => a.level - b.level);
 

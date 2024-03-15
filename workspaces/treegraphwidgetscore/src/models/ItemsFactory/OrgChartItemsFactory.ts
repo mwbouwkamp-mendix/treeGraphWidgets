@@ -16,7 +16,6 @@ export default class OrgChartItemsFactory extends TreeItemsFactory {
     override setXValues(
         currentItems: Item[],
         itemLayout: ItemLayout,
-        _widgetType: string
     ): Item[] {
         const depth = Math.max(...this.items.map(item => item.level));
 
@@ -131,8 +130,7 @@ export default class OrgChartItemsFactory extends TreeItemsFactory {
      * @returns Item[], the updated items
      */
     override setYValues(
-        itemLayout: ItemLayout,
-        _widgetType: string
+        itemLayout: ItemLayout
     ): Item[] {
         return this.items.map(item => {
             item.y = item.level * (itemLayout.elementHeight + itemLayout.verticalSpacing);

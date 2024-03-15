@@ -28,8 +28,8 @@ export default abstract class GraphItemsFactory extends ItemsFactory {
         this.edges = this.createEdges(edgeObjectItems, edgeParent, edgeChild);
     }
 
-    abstract override setXValues(currentItems: Item[], itemLayout: ItemLayout, widgetType: string): Item[];
-    abstract override setYValues(itemLayout: ItemLayout, widgetType: string): Item[];
+    abstract override setXValues(currentItems: Item[], itemLayout: ItemLayout): Item[];
+    abstract override setYValues(itemLayout: ItemLayout): Item[];
     abstract override sortItems(): Item[];
 
     override createItems(
@@ -80,9 +80,9 @@ export default abstract class GraphItemsFactory extends ItemsFactory {
             .filter(edge => !!edge.child && !!edge.parent);
     }
 
-    override setChildren(_widgetType: string, edges: Edge[]): Item[] {
+    override setChildren(_widgetType: string): Item[] {
         const itemsWithChildren = [...this.items];
-        edges.forEach(edge => {
+        this.edges.forEach(edge => {
             const parentItem = this.items.find(item => item.self === edge.parent);
             if (!parentItem) {
                 return;

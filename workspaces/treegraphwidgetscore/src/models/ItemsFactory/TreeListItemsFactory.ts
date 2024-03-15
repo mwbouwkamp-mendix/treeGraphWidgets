@@ -15,7 +15,6 @@ export default class TreeListItemsFactory extends TreeItemsFactory {
     override setXValues(
         _currentItems: Item[],
         itemLayout: ItemLayout,
-        _widgetType: string
     ): Item[] {
         return this.items.map(item => {
             item.x = itemLayout.horizontalSpacing * item.level;
@@ -24,8 +23,7 @@ export default class TreeListItemsFactory extends TreeItemsFactory {
     };
 
     override setYValues(
-        _itemLayout: ItemLayout,
-        _widgetType: string
+        _itemLayout: ItemLayout
     ): Item[] {
         return this.items
     }

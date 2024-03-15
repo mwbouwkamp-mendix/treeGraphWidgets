@@ -5,8 +5,8 @@ import ItemsFactory from "./ItemsFactory";
 import { ObjectItem, ListAttributeValue, ListWidgetValue } from "mendix";
 
 export default abstract class TreeItemsFactory extends ItemsFactory {
-    abstract override setXValues(currentItems: Item[], itemLayout: ItemLayout, widgetType: string): Item[];
-    abstract override setYValues(itemLayout: ItemLayout, widgetType: string): Item[];
+    abstract override setXValues(currentItems: Item[], itemLayout: ItemLayout): Item[];
+    abstract override setYValues(itemLayout: ItemLayout): Item[];
     abstract override sortItems(): Item[];
 
     override createItems(
