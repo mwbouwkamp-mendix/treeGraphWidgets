@@ -1,9 +1,9 @@
-import TreeItemsFactory from "./TreeItemsFactory";
 import { Item } from "../Item";
 import { ItemLayout } from "../ItemLayout";
 import { getRootItem } from "../../utils/ItemUtils";
+import ForestItemsFactory from "./ForestItemsFactory";
 
-export default class TreeListItemsFactory extends TreeItemsFactory {
+export default class TreeListItemsFactory extends ForestItemsFactory {
 
     /**
      * Sets x for all Items based on their position in the tree

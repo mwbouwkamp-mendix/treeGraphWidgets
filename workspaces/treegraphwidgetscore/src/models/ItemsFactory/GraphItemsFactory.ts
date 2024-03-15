@@ -82,7 +82,7 @@ export default abstract class GraphItemsFactory extends ItemsFactory {
             .filter(edge => !!edge.child && !!edge.parent);
     }
 
-    override setChildren(_widgetType: string): Item[] {
+    override setChildren(): Item[] {
         const itemsWithChildren = [...this.items];
         this.edges.forEach(edge => {
             const parentItem = this.items.find(item => item.self === edge.parent);

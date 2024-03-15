@@ -62,6 +62,10 @@ export default abstract class TreeItemsFactory extends ItemsFactory {
         }) as Item[];
     }
 
+    override setChildren(): Item[] {
+        return this.setChildrenBase(false);
+    }
+
     /**
      * Sets the children array for Items based on the parent definition.
      *
@@ -70,28 +74,20 @@ export default abstract class TreeItemsFactory extends ItemsFactory {
      * @param items Item[] to be processed
      * @returns { itemTree: Item[], depth: number } with the processed items and the depth of the tree
      */
-    override setChildren(widgetType: string): Item[] {
+    setChildrenBase(isForest: boolean): Item[] {
         const rootItems = getRootItem(this.items);
 
         if (rootItems.length === 0) {
             return [];
         }
 
-        let processedItems = [] as Item[];
-        let toProcess = [] as Item[];
+        let processedItems = isForest 
+            ? [...rootItems]
+            : [rootItems[0]];
 
-        switch (widgetType) {
-            case "tree":
-                processedItems = [...rootItems];
-                toProcess = [...rootItems];
-                break;
-            case "organogram":
-                processedItems = [rootItems[0]];
-                toProcess = [rootItems[0]];
-                break;
-            default:
-                throw new Error("Unsupported widget type: " + widgetType);
-        }
+        let toProcess = isForest
+            ? [...rootItems]
+            : [rootItems[0]];
 
         let depth = 0;
 

@@ -65,8 +65,7 @@ export const createItems = (
 
     return itemsFactory.execute(
         currentItems,
-        dimensions,
-        widgetType
+        dimensions
     );
 
 

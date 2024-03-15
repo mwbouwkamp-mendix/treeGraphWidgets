@@ -14,9 +14,8 @@ export default abstract class ItemsFactory {
     execute(
         currentItems: Item[],
         itemLayout: ItemLayout,
-        widgetType: string
     ): Item[] {
-        this.items = this.setChildren(widgetType);
+        this.items = this.setChildren();
         this.items = this.setXValues(currentItems, itemLayout);
         this.items = this.removeDummyItems();
         this.items = this.setYValues(itemLayout);
@@ -26,7 +25,6 @@ export default abstract class ItemsFactory {
     }
 
     abstract setChildren(
-        widgetType: string,
     ): Item[];
 
     abstract setXValues(
