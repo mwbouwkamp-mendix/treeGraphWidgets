@@ -5,8 +5,8 @@ import { Edge } from "../../models/Edge";
 // import { FocusedItem } from "../models/FocusedItem";
 
 export default abstract class ItemsFactory {
-    items: Item[];
-    edges: Edge[];
+    protected items: Item[];
+    protected edges: Edge[];
 
     constructor(
         objectItems: ObjectItem[],
@@ -107,19 +107,19 @@ export default abstract class ItemsFactory {
      * @param item the parent Item to which childrend need to be added
      * @returns Item[] of the child Items for the parent Item
      */
-    addChildren(item: Item): Item[] {
-        let children = this.items.filter(item => item.parent === item.self);
+    addChildren(parentItem: Item): Item[] {
+        let children = this.items.filter(item => item.parent === parentItem.self);
 
         // In case there are no children, a dummy child needs to be added for creating the correct horizontal spacing of the items
-        if (children.length === 0 || !item.showsChildren) {
+        if (children.length === 0 || !parentItem.showsChildren) {
             const dummy: Item = {
                 id: Math.round(Math.random() * 1000000).toString(),
                 widgetContent: null,
                 self: Math.round(Math.random() * 1000000).toString(),
-                parent: item.self,
+                parent: parentItem.self,
                 children: null,
                 item: null,
-                level: item.level,
+                level: parentItem.level,
                 y: 0,
                 x: 0,
                 isRoot: false,
@@ -130,10 +130,10 @@ export default abstract class ItemsFactory {
         }
 
         children = children.map(child => {
-            return { ...child, level: item.level + 1 };
+            return { ...child, level: parentItem.level + 1 };
         });
 
-        item.children = children;
+        parentItem.children = children;
 
         return children;
     };
