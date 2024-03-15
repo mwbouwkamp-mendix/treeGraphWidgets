@@ -24,21 +24,6 @@ export const createItems = (
     showsChildren?: ListAttributeValue<boolean>,
     column?: ListAttributeValue<Big>
 ): Item[] => {
-    // return generateItems(
-    //     currentItems,
-    //     dataMicroflow.items!,
-    //     self,
-    //     hasFocus,
-    //     boxContent!,
-    //     dimensions,
-    //     widgetType,
-    //     dataMicroflowEdge?.items,
-    //     parent,
-    //     parentEdge,
-    //     childEdge,
-    //     showsChildren,
-    //     column
-    // );
     let itemsFactory: ItemsFactory;
     switch (widgetType) {
         case "organogram":
@@ -53,7 +38,6 @@ export const createItems = (
         default:
             throw new Error(`Unsupported widgetType: ${widgetType}`);
     };
-
 
     return itemsFactory.execute(
         currentItems,
