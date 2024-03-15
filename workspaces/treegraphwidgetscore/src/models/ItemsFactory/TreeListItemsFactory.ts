@@ -5,16 +5,11 @@ import { ItemLayout } from "../ItemLayout";
 import { getRootItem } from "../../utils/ItemUtils";
 
 export default class TreeListItemsFactory extends ItemsFactory {
-    constructor() {
-        super();
-    }
-
     override setChildren(
-        items: Item[],
         _edges: Edge[],
         widgetType: string
     ): Item[] {
-        return this.setChildrenTree(items, widgetType);
+        return this.setChildrenTree(widgetType);
     }
 
     /**
@@ -26,30 +21,28 @@ export default class TreeListItemsFactory extends ItemsFactory {
      */
     override setXValues(
         _currentItems: Item[],
-        items: Item[],
         itemLayout: ItemLayout,
         _widgetType: string
     ): Item[] {
-        return items.map(item => {
+        return this.items.map(item => {
             item.x = itemLayout.horizontalSpacing * item.level;
             return item;
         });
     };
 
     override setYValues(
-        items: Item[],
         _itemLayout: ItemLayout,
         _widgetType: string
     ): Item[] {
-        return items
+        return this.items
     }
     /**
      * Sorts the list of items, for correct representation of the items in the tree (children righ beneight their parent)
      * @param items the Item[] to sort
      * @returns sorted Item[]
      */
-    override sortItems(items: Item[]): Item[] {
-        const rootItem = getRootItem(items);
+    override sortItems(): Item[] {
+        const rootItem = getRootItem(this.items);
 
         let toProcess = [...rootItem];
         let processedItems = [] as Item[];

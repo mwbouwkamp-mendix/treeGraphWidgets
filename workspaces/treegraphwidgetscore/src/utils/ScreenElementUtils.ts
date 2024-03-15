@@ -24,16 +24,44 @@ export const createItems = (
     showsChildren?: ListAttributeValue<boolean>,
     column?: ListAttributeValue<Big>
 ): Item[] => {
+
     let itemsFactory: ItemsFactory;
     switch (widgetType) {
         case "organogram":
-            itemsFactory = new OrgChartItemsFactory();
+            itemsFactory = new OrgChartItemsFactory(
+                dataMicroflow.items!,
+                self,
+                hasFocus,
+                boxContent!,
+                widgetType,
+                parent,
+                showsChildren,
+                column
+                );
             break;
         case "pert":
-            itemsFactory = new PertChartItemsFactory();
+            itemsFactory = new PertChartItemsFactory(
+                dataMicroflow.items!,
+                self,
+                hasFocus,
+                boxContent!,
+                widgetType,
+                parent,
+                showsChildren,
+                column
+            );
             break;
         case "tree":
-            itemsFactory = new TreeListItemsFactory();
+            itemsFactory = new TreeListItemsFactory(
+                dataMicroflow.items!,
+                self,
+                hasFocus,
+                boxContent!,
+                widgetType,
+                parent,
+                showsChildren,
+                column
+            );
             break;
         default:
             throw new Error(`Unsupported widgetType: ${widgetType}`);
@@ -41,18 +69,11 @@ export const createItems = (
 
     return itemsFactory.execute(
         currentItems,
-        dataMicroflow.items!,
-        self,
-        hasFocus,
-        boxContent!,
         dimensions,
         widgetType,
         dataMicroflowEdge?.items,
-        parent,
         parentEdge,
-        childEdge,
-        showsChildren,
-        column
+        childEdge
     );
 
 

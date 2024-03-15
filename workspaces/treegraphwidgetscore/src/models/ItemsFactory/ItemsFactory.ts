@@ -5,56 +5,59 @@ import { Edge } from "../../models/Edge";
 // import { FocusedItem } from "../models/FocusedItem";
 
 export default abstract class ItemsFactory {
-    constructor() {
-    }
+    items: Item[];
 
-    execute(
-        currentItems: Item[],
+    constructor(
         objectItems: ObjectItem[],
         selfAttribute: ListAttributeValue,
         hasFocusAttribute: ListAttributeValue,
         boxContent: ListWidgetValue,
+        widgetType: string,
+        parentAttribute?: ListAttributeValue,
+        showsChildrenAttribute?: ListAttributeValue,
+        columnAttribute?: ListAttributeValue,
+    ) {
+        this.items = !objectItems
+            ? []
+            : this.createItems(
+                objectItems,
+                selfAttribute,
+                columnAttribute,
+                hasFocusAttribute,
+                boxContent,
+                widgetType,
+                parentAttribute,
+                showsChildrenAttribute
+            );
+    }
+
+    execute(
+        currentItems: Item[],
         itemLayout: ItemLayout,
         widgetType: string,
         edgeObjectItems?: ObjectItem[],
-        parentAttribute?: ListAttributeValue,
         edgeParent?: ListAttributeValue,
         edgeChild?: ListAttributeValue,
-        showsChildrenAttribute?: ListAttributeValue,
-        columnAttribute?: ListAttributeValue,
         hasChildren?: ListAttributeValue
     ): Item[] {
-        if (!objectItems) {
-            return [];
-        }
 
-        let items = this.createItems(
-            objectItems,
-            selfAttribute,
-            columnAttribute,
-            hasFocusAttribute,
-            boxContent,
-            widgetType,
-            parentAttribute,
-            showsChildrenAttribute
-        );
 
         const edges = this.createEdges(edgeObjectItems, edgeParent, edgeChild);
 
-        items = this.setChildren(items, edges, widgetType);
+        this.items = this.setChildren(edges, widgetType);
 
         if (hasChildren) {
             // Not yet supported by Mendix: Widget [WIDGET] is attempting to call "setValue". This operation is not yet supported on attributes linked to a datasource.
             //     setHasChildren(items, hasChildren);
         }
 
-        items = this.setXValues(currentItems, items, itemLayout, widgetType);
-        items = this.removeDummyItems(items);
-        items = this.setYValues(items, itemLayout, widgetType);
+        this.items = this.setXValues(currentItems, itemLayout, widgetType);
+        this.items = this.removeDummyItems();
+        this.items = this.setYValues(itemLayout, widgetType);
 
-        items = this.sortItems(items);
-        
-        return items;
+        this.items = this.sortItems();
+
+        return this.items;
     }
 
     createItems(
@@ -115,32 +118,27 @@ export default abstract class ItemsFactory {
     }
 
     abstract setChildren(
-        items: Item[],
         edges: Edge[],
         widgetType: string
     ): Item[];
 
     abstract setXValues(
         currentItems: Item[],
-        items: Item[],
         itemLayout: ItemLayout,
         widgetType: string
     ): Item[];
 
     abstract setYValues(
-        items: Item[],
         itemLayout: ItemLayout,
         widgetType: string
     ): Item[];
 
-    abstract sortItems(
-        items: Item[]
-    ): Item[];
+    abstract sortItems(): Item[];
 
-    removeDummyItems(items: Item[]): Item[] {
-        const dummies = items.filter(item => !item.item);
-        items.filter(item => item.children && dummies.includes(item.children[0])).forEach(item => (item.children = []));
-        return items.filter(item => !!item.item);
+    removeDummyItems(): Item[] {
+        const dummies = this.items.filter(item => !item.item);
+        this.items.filter(item => item.children && dummies.includes(item.children[0])).forEach(item => (item.children = []));
+        return this.items.filter(item => !!item.item);
     };
 
     /**
@@ -151,8 +149,8 @@ export default abstract class ItemsFactory {
      * @param items Item[] to be processed
      * @returns { itemTree: Item[], depth: number } with the processed items and the depth of the tree
      */
-    setChildrenTree(items: Item[], widgetType: string): Item[] {
-        const rootItems = this.getRootItem(items);
+    setChildrenTree(widgetType: string): Item[] {
+        const rootItems = this.getRootItem(this.items);
 
         if (rootItems.length === 0) {
             return [];
@@ -181,7 +179,7 @@ export default abstract class ItemsFactory {
                 return [
                     ...processedItems,
                     // eslint-disable-next-line no-loop-func
-                    ...toProcess.filter(item => item.level <= depth).flatMap(item => this.addChildren(item, items))
+                    ...toProcess.filter(item => item.level <= depth).flatMap(item => this.addChildren(item))
                 ];
             }
 
@@ -191,7 +189,7 @@ export default abstract class ItemsFactory {
                 depth++;
             }
 
-            const children = this.addChildren(currentParent, items);
+            const children = this.addChildren(currentParent);
 
             toProcess = [...toProcess, ...children];
             processedItems = [...processedItems, ...children];
@@ -232,8 +230,8 @@ export default abstract class ItemsFactory {
      * @param items Item[] containing potential childeren
      * @returns Item[] of the child Items for the parent Item
      */
-    addChildren(parent: Item, items: Item[]): Item[] {
-        let children = items.filter(item => item.parent === parent.self);
+    addChildren(parent: Item): Item[] {
+        let children = this.items.filter(item => item.parent === parent.self);
 
         // In case there are no children, a dummy child needs to be added for creating the correct horizontal spacing of the items
         if (children.length === 0 || !parent.showsChildren) {
@@ -263,15 +261,15 @@ export default abstract class ItemsFactory {
         return children;
     };
 
-    setChildrenGraph(items: Item[], edges: Edge[]): Item[] {
-        const itemsWithChildren = [...items];
+    setChildrenGraph(edges: Edge[]): Item[] {
+        const itemsWithChildren = [...this.items];
         edges.forEach(edge => {
-            const parentItem = items.find(item => item.self === edge.parent);
+            const parentItem = this.items.find(item => item.self === edge.parent);
             if (!parentItem) {
                 return;
             }
 
-            const childItem = items.find(item => item.self === edge.child);
+            const childItem = this.items.find(item => item.self === edge.child);
             if (!childItem) {
                 return;
             }

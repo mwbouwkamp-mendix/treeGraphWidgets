@@ -5,16 +5,11 @@ import { ItemLayout } from "../ItemLayout";
 import { getParentItems } from "../../utils/ItemUtils";
 
 export default class OrgChartItemsFactory extends ItemsFactory {
-    constructor() {
-        super();
-    }
-
     override setChildren(
-        items: Item[],
         edges: Edge[],
         _widgetType: string
     ): Item[] {
-        return this.setChildrenGraph(items, edges);
+        return this.setChildrenGraph(edges);
     }
 
     /**
@@ -26,11 +21,10 @@ export default class OrgChartItemsFactory extends ItemsFactory {
      */
     override setXValues(
         _currentItems: Item[],
-        items: Item[],
         itemLayout: ItemLayout,
         _widgetType: string
     ): Item[] {
-        return items.map(item => {
+        return this.items.map(item => {
             item.x = item.level * (itemLayout.elementWidth + itemLayout.horizontalSpacing);
             return item;
         });
@@ -43,18 +37,17 @@ export default class OrgChartItemsFactory extends ItemsFactory {
      * @returns Item[], the updated items
      */
     override setYValues(
-        items: Item[],
         itemLayout: ItemLayout,
         _widgetType: string
     ): Item[] {
         // const itemsByLevel = items.sort((a, b) => a.level - b.level);
 
-        const minLevel = items.map(item => item.level).reduce((a: number, b: number) => (b < a ? b : a), Number.MAX_VALUE);
-        const maxLevel = items.map(item => item.level).reduce((a: number, b: number) => (b > a ? b : a), Number.MIN_VALUE);
+        const minLevel = this.items.map(item => item.level).reduce((a: number, b: number) => (b < a ? b : a), Number.MAX_VALUE);
+        const maxLevel = this.items.map(item => item.level).reduce((a: number, b: number) => (b > a ? b : a), Number.MIN_VALUE);
 
-        const zeroLevelItems = items.filter(item => item.level === minLevel);
+        const zeroLevelItems = this.items.filter(item => item.level === minLevel);
 
-        const otherLevelItems = items.filter(item => !zeroLevelItems.includes(item));
+        const otherLevelItems = this.items.filter(item => !zeroLevelItems.includes(item));
 
         let currentY = 0;
 
@@ -69,7 +62,7 @@ export default class OrgChartItemsFactory extends ItemsFactory {
             const levelItems = otherLevelItems.filter(item => item.level === i);
             while (levelItems.length > 0) {
                 const currentItem = levelItems.shift()!;
-                const parents = getParentItems(currentItem, items);
+                const parents = getParentItems(currentItem, this.items);
                 currentItem.y =
                     parents.length > 0 ? parents.map(parent => parent.y).reduce((a, b) => a + b, 0) / parents.length : 0;
                 if (currentY !== Number.MIN_VALUE && currentItem.y <= currentY) {
@@ -81,7 +74,7 @@ export default class OrgChartItemsFactory extends ItemsFactory {
 
         for (let i = minLevel + 1; i <= maxLevel; i++) {
             const levelItems = otherLevelItems.filter(item => item.level === i);
-            this.fixStrainInLevel(levelItems, items);
+            this.fixStrainInLevel(levelItems);
         }
 
         let fixedOverlap = false;
@@ -106,7 +99,7 @@ export default class OrgChartItemsFactory extends ItemsFactory {
         if (fixedOverlap) {
             for (let i = minLevel + 1; i <= maxLevel; i++) {
                 const levelItems = otherLevelItems.filter(item => item.level === i);
-                this.fixStrainInLevel(levelItems, items);
+                this.fixStrainInLevel(levelItems);
             }
         }
         // otherLevelItems.forEach(item => {
@@ -188,9 +181,9 @@ export default class OrgChartItemsFactory extends ItemsFactory {
         );
     };
 
-    private fixStrainInLevel(levelItems: Item[], items: Item[]): void {
+    private fixStrainInLevel(levelItems: Item[]): void {
         const strain = levelItems.reduce((a, b) => {
-            const parents = getParentItems(b, items);
+            const parents = getParentItems(b, this.items);
             return (
                 (a +
                     parents
@@ -210,7 +203,7 @@ export default class OrgChartItemsFactory extends ItemsFactory {
         });
     };
 
-    override sortItems(items: Item[]): Item[] {
-        return items;
+    override sortItems(): Item[] {
+        return this.items;
     }
 }

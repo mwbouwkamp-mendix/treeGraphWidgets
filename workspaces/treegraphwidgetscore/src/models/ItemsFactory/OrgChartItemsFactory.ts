@@ -6,16 +6,11 @@ import { ItemLayout } from "../ItemLayout";
 
 
 export default class OrgChartItemsFactory extends ItemsFactory {
-    constructor() {
-        super();
-    }
-
     override setChildren(
-        items: Item[],
         _edges: Edge[],
         widgetType: string
     ): Item[] {
-        return this.setChildrenTree(items, widgetType);
+        return this.setChildrenTree(widgetType);
     }
 
     /**
@@ -27,17 +22,16 @@ export default class OrgChartItemsFactory extends ItemsFactory {
      */
     override setXValues(
         currentItems: Item[],
-        items: Item[],
         itemLayout: ItemLayout,
         _widgetType: string
     ): Item[] {
-        const depth = Math.max(...items.map(item => item.level));
+        const depth = Math.max(...this.items.map(item => item.level));
 
-        const levels = [...Array(depth + 1).keys()].map(i => [...items].filter(item => item.level === i)).reverse();
+        const levels = [...Array(depth + 1).keys()].map(i => [...this.items].filter(item => item.level === i)).reverse();
 
         const itemsWithXValues = levels.flatMap((level, levelIndex) => {
             if (levelIndex === 0) {
-                return this.setXValuesBottom(level, items, itemLayout);
+                return this.setXValuesBottom(level, itemLayout);
             }
             return this.setXValuesNonBottom(level);
         });
@@ -45,7 +39,7 @@ export default class OrgChartItemsFactory extends ItemsFactory {
         const focusedItemProps = getFocussedItemProps(currentItems);
 
         const currentFocus = currentItems.find(item => item.id === focusedItemProps.id);
-        const itemsFocus = items.find(item => item.id === focusedItemProps.id);
+        const itemsFocus = this.items.find(item => item.id === focusedItemProps.id);
 
         if (currentFocus && itemsFocus) {
             const deltaX = currentFocus.x - itemsFocus.x;
@@ -63,7 +57,6 @@ export default class OrgChartItemsFactory extends ItemsFactory {
      */
     private setXValuesBottom(
         level: Item[],
-        items: Item[],
         itemLayout: ItemLayout
     ): Item[] {
         return level.reduce((accumulator, item, itemIndex) => {
@@ -71,7 +64,7 @@ export default class OrgChartItemsFactory extends ItemsFactory {
                 return [item];
             }
             const prevItem = accumulator[accumulator.length - 1];
-            const spacer = this.isSameHorizontalGroup(item, prevItem, items)
+            const spacer = this.isSameHorizontalGroup(item, prevItem, this.items)
                 ? itemLayout.horizontalSpacing
                 : itemLayout.horizontalSpacing * itemLayout.horizontalSpacingFactor;
 
@@ -145,17 +138,16 @@ export default class OrgChartItemsFactory extends ItemsFactory {
      * @returns Item[], the updated items
      */
     override setYValues(
-        items: Item[],
         itemLayout: ItemLayout,
         _widgetType: string
     ): Item[] {
-        return items.map(item => {
+        return this.items.map(item => {
             item.y = item.level * (itemLayout.elementHeight + itemLayout.verticalSpacing);
             return item;
         });
     };
 
-    override sortItems(items: Item[]): Item[] {
-        return items;
+    override sortItems(): Item[] {
+        return this.items;
     }
 }
