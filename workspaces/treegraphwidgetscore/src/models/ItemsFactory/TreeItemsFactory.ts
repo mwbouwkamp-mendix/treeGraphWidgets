@@ -5,18 +5,38 @@ import ItemsFactory from "./ItemsFactory";
 import { ObjectItem, ListAttributeValue, ListWidgetValue } from "mendix";
 
 export default abstract class TreeItemsFactory extends ItemsFactory {
+    constructor(
+        objectItems: ObjectItem[],
+        selfAttribute: ListAttributeValue,
+        hasFocusAttribute: ListAttributeValue,
+        boxContent: ListWidgetValue,
+        parentAttribute: ListAttributeValue,
+        showsChildrenAttribute: ListAttributeValue
+    ) {
+        super();
+        this.items = !objectItems
+        ? []
+        : this.createItems(
+            objectItems,
+            selfAttribute,
+            hasFocusAttribute,
+            boxContent,
+            parentAttribute,
+            showsChildrenAttribute
+       );
+    }
+
     abstract override setXValues(currentItems: Item[], itemLayout: ItemLayout): Item[];
     abstract override setYValues(itemLayout: ItemLayout): Item[];
     abstract override sortItems(): Item[];
 
-    override createItems(
+    createItems(
         items: ObjectItem[],
         selfAttribute: ListAttributeValue,
-        _columnAttribute: ListAttributeValue | undefined,
         hasFocusAttribute: ListAttributeValue,
         boxContent: ListWidgetValue,
-        parentAttribute?: ListAttributeValue,
-        showsChildrenAttribute?: ListAttributeValue
+        parentAttribute: ListAttributeValue,
+        showsChildrenAttribute: ListAttributeValue
     ): Item[] {
         if (!items) {
             throw Error("No items found");

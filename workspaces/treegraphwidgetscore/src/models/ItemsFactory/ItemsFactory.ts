@@ -1,33 +1,13 @@
 import { ItemLayout } from "../../models/ItemLayout";
-import { ListAttributeValue, ObjectItem, ListWidgetValue } from "mendix";
 import { Item } from "../../models/Item";
 import { Edge } from "../../models/Edge";
-// import { FocusedItem } from "../models/FocusedItem";
 
 export default abstract class ItemsFactory {
     protected items: Item[];
     protected edges: Edge[];
 
-    constructor(
-        objectItems: ObjectItem[],
-        selfAttribute: ListAttributeValue,
-        hasFocusAttribute: ListAttributeValue,
-        boxContent: ListWidgetValue,
-        parentAttribute?: ListAttributeValue,
-        showsChildrenAttribute?: ListAttributeValue,
-        columnAttribute?: ListAttributeValue,
-    ) {
-        this.items = !objectItems
-            ? []
-            : this.createItems(
-                objectItems,
-                selfAttribute,
-                columnAttribute,
-                hasFocusAttribute,
-                boxContent,
-                parentAttribute,
-                showsChildrenAttribute
-            );
+    constructor() {
+        this.items = [];
         this.edges = [];
     }
 
@@ -35,33 +15,15 @@ export default abstract class ItemsFactory {
         currentItems: Item[],
         itemLayout: ItemLayout,
         widgetType: string
-        // hasChildren?: ListAttributeValue
     ): Item[] {
         this.items = this.setChildren(widgetType);
-
-        // if (hasChildren) {
-            // Not yet supported by Mendix: Widget [WIDGET] is attempting to call "setValue". This operation is not yet supported on attributes linked to a datasource.
-            //     setHasChildren(items, hasChildren);
-        // }
-
         this.items = this.setXValues(currentItems, itemLayout);
         this.items = this.removeDummyItems();
         this.items = this.setYValues(itemLayout);
-
         this.items = this.sortItems();
 
         return this.items;
     }
-
-    abstract createItems(
-        items: ObjectItem[],
-        selfAttribute: ListAttributeValue,
-        columnAttribute: ListAttributeValue | undefined,
-        hasFocusAttribute: ListAttributeValue,
-        boxContent: ListWidgetValue,
-        parentAttribute?: ListAttributeValue,
-        showsChildrenAttribute?: ListAttributeValue
-    ): Item[];
 
     abstract setChildren(
         widgetType: string,

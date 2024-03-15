@@ -32,10 +32,9 @@ export const createItems = (
                 dataMicroflow.items!,
                 self,
                 hasFocus,
-                boxContent!,
-                parent,
-                showsChildren,
-                column
+                boxContent,
+                parent!,
+                showsChildren!
             );
             break;
         case "pert":
@@ -44,12 +43,10 @@ export const createItems = (
                 self,
                 hasFocus,
                 boxContent!,
-                parent,
-                showsChildren,
-                column,
-                dataMicroflowEdge?.items,
-                parentEdge,
-                childEdge
+                column!,
+                dataMicroflowEdge?.items!,
+                parentEdge!,
+                childEdge!
             );
             break;
         case "tree":
@@ -57,10 +54,9 @@ export const createItems = (
                 dataMicroflow.items!,
                 self,
                 hasFocus,
-                boxContent!,
-                parent,
-                showsChildren,
-                column
+                boxContent,
+                parent!,
+                showsChildren!
             );
             break;
         default:

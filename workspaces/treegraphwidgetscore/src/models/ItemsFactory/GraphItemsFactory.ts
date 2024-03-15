@@ -10,34 +10,36 @@ export default abstract class GraphItemsFactory extends ItemsFactory {
         selfAttribute: ListAttributeValue,
         hasFocusAttribute: ListAttributeValue,
         boxContent: ListWidgetValue,
-        parentAttribute?: ListAttributeValue,
-        showsChildrenAttribute?: ListAttributeValue,
-        columnAttribute?: ListAttributeValue,
-        edgeObjectItems?: ObjectItem[],
-        edgeParent?: ListAttributeValue,
-        edgeChild?: ListAttributeValue,
+        columnAttribute: ListAttributeValue,
+        edgeObjectItems: ObjectItem[],
+        edgeParent: ListAttributeValue,
+        edgeChild: ListAttributeValue,
     ) {
-        super(
+        super();
+
+        this.items = !objectItems
+        ? []
+        : this.createItems(
             objectItems,
             selfAttribute,
             hasFocusAttribute,
             boxContent,
-            parentAttribute,
-            showsChildrenAttribute,
             columnAttribute);
-        this.edges = this.createEdges(edgeObjectItems, edgeParent, edgeChild);
+        this.edges = !edgeObjectItems
+            ? [] 
+            : this.createEdges(edgeObjectItems, edgeParent, edgeChild);
     }
 
     abstract override setXValues(currentItems: Item[], itemLayout: ItemLayout): Item[];
     abstract override setYValues(itemLayout: ItemLayout): Item[];
     abstract override sortItems(): Item[];
 
-    override createItems(
+    createItems(
         items: ObjectItem[],
         selfAttribute: ListAttributeValue,
-        columnAttribute: ListAttributeValue | undefined,
         hasFocusAttribute: ListAttributeValue,
         boxContent: ListWidgetValue,
+        columnAttribute: ListAttributeValue | undefined,
     ): Item[] {
         if (!items) {
             throw Error("No items found");
