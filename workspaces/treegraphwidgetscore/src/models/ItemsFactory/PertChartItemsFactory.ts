@@ -1,16 +1,9 @@
-import { Edge } from "../Edge";
 import { Item } from "../Item";
 import { ItemLayout } from "../ItemLayout";
 import { getParentItems } from "../../utils/ItemUtils";
 import GraphItemsFactory from "./GraphItemsFactory";
 
 export default class PertChartItemsFactory extends GraphItemsFactory {
-    override setChildren(
-        _widgetType: string,
-        edges: Edge[]
-    ): Item[] {
-        return this.setChildrenGraph(edges);
-    }
 
     /**
      * Sets x for all Items based on their position in the pert

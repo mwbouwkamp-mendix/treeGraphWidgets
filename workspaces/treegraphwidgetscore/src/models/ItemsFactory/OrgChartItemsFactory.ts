@@ -5,11 +5,6 @@ import TreeItemsFactory from "./TreeItemsFactory";
 
 
 export default class OrgChartItemsFactory extends TreeItemsFactory {
-    override setChildren(
-        widgetType: string
-    ): Item[] {
-        return this.setChildrenTree(widgetType);
-    }
 
     /**
      * Sets x for all Items based on their position in the organogram

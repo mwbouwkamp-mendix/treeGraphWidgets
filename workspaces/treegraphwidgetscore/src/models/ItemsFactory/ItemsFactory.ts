@@ -118,74 +118,6 @@ export default abstract class ItemsFactory {
     };
 
     /**
-     * Sets the children array for Items based on the parent definition.
-     *
-     * If we have a Item[] with A, B and C and B and C have A as a parent, the list of children for A will become [B, C]
-     *
-     * @param items Item[] to be processed
-     * @returns { itemTree: Item[], depth: number } with the processed items and the depth of the tree
-     */
-    setChildrenTree(widgetType: string): Item[] {
-        const rootItems = this.getRootItem(this.items);
-
-        if (rootItems.length === 0) {
-            return [];
-        }
-
-        let processedItems = [] as Item[];
-        let toProcess = [] as Item[];
-
-        switch (widgetType) {
-            case "tree":
-                processedItems = [...rootItems];
-                toProcess = [...rootItems];
-                break;
-            case "organogram":
-                processedItems = [rootItems[0]];
-                toProcess = [rootItems[0]];
-                break;
-            default:
-                throw new Error("Unsupported widget type: " + widgetType);
-        }
-
-        let depth = 0;
-
-        while (toProcess.length > 0) {
-            if (this.hasOnlyDummies(toProcess)) {
-                return [
-                    ...processedItems,
-                    // eslint-disable-next-line no-loop-func
-                    ...toProcess.filter(item => item.level <= depth).flatMap(item => this.addChildren(item))
-                ];
-            }
-
-            const currentParent = toProcess.shift()!;
-
-            if (currentParent.level > depth) {
-                depth++;
-            }
-
-            const children = this.addChildren(currentParent);
-
-            toProcess = [...toProcess, ...children];
-            processedItems = [...processedItems, ...children];
-        }
-
-        return processedItems;
-    };
-
-    /**
-     * Returns a root Item from an array of Items. When the array of Items contains more than one root item, the first one will be returned
-     * An Item is a root Item if it has no parent (parents === "")
-     *
-     * @param items Items[] from which the root needs to be found
-     * @returns The first root Item
-     */
-    private getRootItem(items: Item[]): Item[] {
-        return items.filter(item => !item.parent);
-    };
-
-    /**
      * Checks if an array of Items is not only consisting of dummy Items.
      * An Item is a dummy item when parent.item is undefined
      *
@@ -236,30 +168,4 @@ export default abstract class ItemsFactory {
 
         return children;
     };
-
-    setChildrenGraph(edges: Edge[]): Item[] {
-        const itemsWithChildren = [...this.items];
-        edges.forEach(edge => {
-            const parentItem = this.items.find(item => item.self === edge.parent);
-            if (!parentItem) {
-                return;
-            }
-
-            const childItem = this.items.find(item => item.self === edge.child);
-            if (!childItem) {
-                return;
-            }
-
-            const currentChildren = parentItem.children;
-            if (currentChildren) {
-                parentItem.children = [...currentChildren, childItem];
-            } else {
-                parentItem.children = [childItem];
-            }
-
-            childItem.parent = parentItem.self;
-        });
-        return itemsWithChildren;
-    };
-
 }
