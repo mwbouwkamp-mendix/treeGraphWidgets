@@ -423,7 +423,7 @@ const setYValuesOrganogram = (items: Item[], itemLayout: ItemLayout): Item[] => 
     });
 };
 
-const getParentItems = (childItem: Item, items: Item[]): Item[] => {
+export const getParentItems = (childItem: Item, items: Item[]): Item[] => {
     return items.filter(item => item.children?.includes(childItem));
 };
 
