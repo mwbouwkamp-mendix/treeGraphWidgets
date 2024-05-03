@@ -2,7 +2,7 @@
     "name": "@treegraphwidgets/orgchart",
     "widgetName": "OrgChart",
     "main": "./src/orgChart.tsx",
-    "version": "1.1.2",
+    "version": "1.2.0",
     "description": "Organogram widget",
     "copyright": "© Mendix Technology BV 2022. All rights reserved.",
     "author": "Marco Bouwkamp",
