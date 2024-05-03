@@ -65,7 +65,7 @@ const usePanZoomScroll = (
     };
 
     const adjustZoom = (deltaY: number): void => {
-        setZoom(prevZoom => Math.min(Math.max(10, prevZoom + deltaY * -0.05), 400));
+        setZoom(prevZoom => Math.min(Math.max(10, prevZoom + deltaY * -0.08 * prevZoom / 100), 400));
     };
 
     const onWheelEvent = (event: WheelEvent): void => {
