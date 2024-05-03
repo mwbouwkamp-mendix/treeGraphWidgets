@@ -29,26 +29,29 @@ const usePanZoomScroll = (
         (x: number, y: number): void => {
             setOrigin(() => {
                 return {
-                    x: (width - elementWidth) / 2 - x,
-                    y: (height - elementHeight) / 2 - y
+                    x: x,
+                    y: y
                 };
             });
         },
-        [elementHeight, elementWidth, height, width]
+        [height]
     );
 
-    const resetView = useCallback((): void => {
+    const resetView = useCallback((resetZoom: boolean): void => {
         if (widgetType !== "pert" && focusItemProps.isRoot) {
-            adjustOrigin(focusItemProps.x, focusItemProps.y + height * 0.3);
+            adjustOrigin((width - elementWidth) / 2 - focusItemProps.x, (height - elementHeight) / 2 - focusItemProps.y - height * 0.3);
         } else {
-            adjustOrigin(focusItemProps.x, focusItemProps.y);
+            adjustOrigin((width - elementWidth) / 2 - focusItemProps.x, (height - elementHeight) / 2 - focusItemProps.y);
         }
-        // setZoom(100);
-    }, [adjustOrigin, focusItemProps.isRoot, focusItemProps.x, focusItemProps.y, height, widgetType]);
+
+        if (resetZoom) {
+            setZoom(() => 100);
+        }
+    }, [adjustOrigin, focusItemProps.isRoot, focusItemProps.x, focusItemProps.y, width, height, elementWidth, elementHeight, widgetType]);
 
     useEffect(() => {
         if (focusItemProps.x !== origin.x || focusItemProps.y !== origin.y) {
-            resetView();
+            resetView(false);
         }
     }, [resetView, focusItemProps.x, focusItemProps.y]);
 
@@ -101,11 +104,11 @@ const usePanZoomScroll = (
 
     const onMouseDoubleClick = (event: MouseEvent): void => {
         event.preventDefault();
-        resetView();
+        resetView(true);
     };
 
     const translateX = origin.x * (zoom / 100);
-    const translateY = origin.y * (zoom / 100) + (-0.5 * (zoom / 100) + 0.5) * height;
+    const translateY = origin.y * (zoom / 100);
 
     return {
         zoom,
