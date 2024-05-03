@@ -55,8 +55,8 @@ const usePanZoomScroll = (
     const moveOrigin = (delta: { x: number; y: number }): void => {
         setOrigin(prevOrigin => {
             return {
-                x: prevOrigin.x + delta.x,
-                y: prevOrigin.y + delta.y
+                x: prevOrigin.x + delta.x * 100 / zoom,
+                y: prevOrigin.y + delta.y * 100 / zoom
             };
         });
     };
