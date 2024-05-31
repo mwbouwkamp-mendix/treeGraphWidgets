@@ -29,8 +29,8 @@ export interface PertChartContainerProps {
     boxContent: ListWidgetValue;
     dataMicroflowEdge: ListValue;
     parentEdge: ListAttributeValue<string>;
-    childEdge?: ListAttributeValue<string>;
-    column?: ListAttributeValue<Big>;
+    childEdge: ListAttributeValue<string>;
+    column: ListAttributeValue<Big>;
 }
 
 export interface PertChartPreviewProps {

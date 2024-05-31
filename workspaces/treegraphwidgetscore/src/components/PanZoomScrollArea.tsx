@@ -51,6 +51,7 @@ const PanZoomScrollArea = (props: PanZoomScrollAreaProps): ReactElement => {
             <div
                 className={classes.dynamic}
                 style={{
+                    transformOrigin: `${props.width / 2}px ${props.height / 2}px`,
                     transform: `translate(${translateX}px, ${translateY}px) scale(${zoom / 100}, ${zoom / 100})`
                 }}
             >
