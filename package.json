@@ -7,8 +7,8 @@
     "workspaces/*"
   ],
   "scripts": {
-    "build": "cd ./workspaces/orgChart/ && npm run build && cd ../pertChart/ && npm run build && cd ../treeList/ && npm run build && cd .. & cd ..",
-    "release": "cd ./workspaces/orgChart/ && npm run release && cd ../pertChart/ && npm run release && cd ../treeList/ && npm run release && cd .. & cd ..",
+    "build": "cd ./workspaces/orgChart/ && npm run build && cd ../pertChart/ && npm run build && cd ../treeList/ && npm run build && cd ../slidingtreeview/ && npm run build && cd .. & cd ..",
+    "release": "cd ./workspaces/orgChart/ && npm run release && cd ../pertChart/ && npm run release && cd ../treeList/ && npm run release && cd ../slidingtreeview/ && npm run release && cd .. & cd ..",
     "node_modules": "rm -rf ./workspaces/*/node_modules"
   },
   "devDependencies": {

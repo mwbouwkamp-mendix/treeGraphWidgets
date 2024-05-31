@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget id="mendix.slidingtreeview.SlidingTreeView" pluginWidget="true" needsEntityContext="true" offlineCapable="true"
+        supportedPlatform="Web"
+        xmlns="http://www.mendix.com/widget/1.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.mendix.com/widget/1.0/ ../node_modules/mendix/custom_widget.xsd">
+    <name>Sliding Tree View</name>
+    <description>TreeList, part of the TreeGraphWidgets collection</description>
+    <icon/>
+    <properties>
+        <propertyGroup caption="Workspace">
+            <property key="height" type="integer" required="true" defaultValue="400">
+                <caption>Height</caption>
+                <description>Height in px of the workspace (width is 100% of parent)</description>
+            </property>
+            <property key="dataMicroflow" type="datasource" isList="true">
+                <caption>Datasource</caption>
+                <description />
+            </property>
+            <property key="self" type="attribute" dataSource="dataMicroflow">
+                <caption>Descriptor</caption>
+                <description>Unique descriptor for item</description>
+                <attributeTypes>
+                    <attributeType name="String"/>
+                </attributeTypes>
+            </property>
+            <property key="parent" type="attribute" dataSource="dataMicroflow" required="false">
+                <caption>Parent association</caption>
+                <description>Association to the parent node (link to unique descriptor)</description>
+                <attributeTypes>
+                    <attributeType name="String"/>
+                </attributeTypes>
+            </property>
+            <property key="hasFocus" type="attribute" dataSource="dataMicroflow">
+                <caption>Has focus?</caption>
+                <description>First element found by widget with hasFocus set to true will be centered in the widget</description>
+                <attributeTypes>
+                    <attributeType name="Boolean"/>
+                </attributeTypes>
+            </property>
+            <property key="showsChildren" type="attribute" dataSource="dataMicroflow" required="false">
+                <caption>Shows children?</caption>
+                <description>When set to false, the tree under this item will be hidden</description>
+                <attributeTypes>
+                    <attributeType name="Boolean"/>
+                </attributeTypes>
+            </property>
+        </propertyGroup>
+        <propertyGroup caption="Elements">
+            <property key="indentation" type="integer" required="true" defaultValue="20">
+                <caption>Indentation</caption>
+                <description>Indentation in px for child levels</description>
+            </property>
+        </propertyGroup>
+        <propertyGroup caption="PluggableElements">
+            <property key="boxContent" type="widgets" required="false" dataSource="dataMicroflow">
+	            <caption>BoxContent</caption>
+	            <description>Content of a box</description>
+            </property>
+        </propertyGroup>
+    </properties>
+</widget>

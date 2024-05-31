@@ -1,0 +1,9 @@
+{
+    "extends": "@mendix/pluggable-widgets-tools/configs/tsconfig.base",
+    "compilerOptions": {
+        "target": "ES2015",
+        "jsx": "react",
+        "baseUrl": "./"
+    },
+    "include": ["./src", "./typings"]
+}
