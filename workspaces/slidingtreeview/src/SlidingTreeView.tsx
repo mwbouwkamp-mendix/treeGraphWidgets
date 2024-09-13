@@ -4,7 +4,6 @@ import { SlidingTreeViewContainerProps } from "../typings/SlidingTreeViewProps";
 import useScreenElements from "@treegraphwidgets/treegraphwidgetscore/src/hooks/useScreenElements";
 import classes from "@treegraphwidgets/treegraphwidgetscore/src/TreeGraphWidgetsCore.module.css";
 
-import "./ui/SlidingTreeView.css";
 import Tree from "./components/Tree";
 import { ItemLayout } from "@treegraphwidgets/treegraphwidgetscore/src/models/ItemLayout";
 

@@ -1,6 +1,6 @@
 import { createElement, ReactElement } from "react";
 import { Item } from "@treegraphwidgets/TreeGraphWidgetsCore/src/models/Item";
-import classes from "./TreeLine.module.css";
+import styles from "./TreeLine.module.css";
 
 export interface TreeLineProps {
     item: Item;
@@ -8,9 +8,9 @@ export interface TreeLineProps {
 
 const TreeLine = (props: TreeLineProps): ReactElement => {
     return (
-        <div className={`tree-list-line ${classes.container}`}>
+        <div className={`tree-list-line ${styles.container}`}>
             <div className="tree-list-line-indentation" style={{ width: props.item.x }}></div>
-            <div className={`tree-list-line-content ${classes.main}`}>{props.item.widgetContent}</div>
+            <div className={`tree-list-line-content ${styles.main}`}>{props.item.widgetContent}</div>
         </div>
     );
 };

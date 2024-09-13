@@ -26,11 +26,12 @@
     },
     "devDependencies": {
         "@mendix/pluggable-widgets-tools": "^9.18.0",
-        "@types/big.js": "^6.0.2"
+        "@types/big.js": "^6.0.2",
+        "@types/uuid": "^9.0.8"
     },
     "dependencies": {
-        "classnames": "^2.2.6",
-        "@treegraphwidgets/treegraphwidgetscore": "*"
+        "@treegraphwidgets/treegraphwidgetscore": "*",
+        "classnames": "^2.2.6"
     },
     "overrides": {
         "react": "^18.2.0",

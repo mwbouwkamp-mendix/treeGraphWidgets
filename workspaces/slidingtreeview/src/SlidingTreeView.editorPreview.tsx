@@ -100,6 +100,6 @@ export function preview(props: SlidingTreeViewPreviewProps): ReactElement {
     );
 }
 
-export function getPreviewCss(): string {
-    return require("./ui/SlidingTreeView.css");
-}
+// export function getPreviewCss(): string {
+//     return require("./ui/SlidingTreeView.css");
+// }

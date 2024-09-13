@@ -1,0 +1,20 @@
+.container {
+    --columns: 1; /* Change this value to the number of columns (3, 4, or 5) */
+    --panel-width: calc(100% / var(--columns));
+    display: flex;
+    overflow-x: auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.panel {
+    flex: 0 0 var(--panel-width);
+    height: 200px;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f4f4f4;
+}
+.panel:last-child {
+    flex: 0 0 calc(100% - (var(--columns) - 1) * var(--panel-width));
+}
