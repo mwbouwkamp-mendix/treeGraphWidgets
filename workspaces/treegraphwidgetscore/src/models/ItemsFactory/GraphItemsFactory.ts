@@ -57,7 +57,7 @@ export default abstract class GraphItemsFactory extends ItemsFactory {
                 y: 0,
                 x: 0,
                 isRoot: !parent,
-                hasFocus: hasFocusAttribute.get(item).displayValue === "Yes",
+                hasFocus: hasFocusAttribute.get(item).value === true,
                 showsChildren: undefined
             };
         }) as Item[];
