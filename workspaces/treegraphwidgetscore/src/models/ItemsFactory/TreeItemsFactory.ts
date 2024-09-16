@@ -56,8 +56,8 @@ export default abstract class TreeItemsFactory extends ItemsFactory {
                 y: 0,
                 x: 0,
                 isRoot: !parent,
-                hasFocus: hasFocusAttribute.get(item).displayValue === "Yes",
-                showsChildren: showsChildrenAttribute?.get(item).displayValue === "Yes" || undefined
+                hasFocus: hasFocusAttribute.get(item).value === true,
+                showsChildren: showsChildrenAttribute?.get(item).value === true || undefined
             };
         }) as Item[];
     }
